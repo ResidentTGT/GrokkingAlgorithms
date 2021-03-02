@@ -1,0 +1,12 @@
+{
+  "name": "grokking_algorithms",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "http-server -c-1"
+  },
+  "dependencies": {
+    "http-server": "^0.12.3",
+    "roboto-fontface": "^0.10.0"
+  },
+  "devDependencies": {}
+}

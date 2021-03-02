@@ -1,0 +1,105 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  background: #212121;
+  font-family: "Roboto-Light", Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+aside {
+  height: 100%;
+  width: 300px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+}
+
+aside ul {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+}
+
+aside a {
+  display: block;
+  height: 45px;
+  width: 100%;
+  background-color: #424242;
+  margin-top: 10px;
+  color: #fbc02d;
+  text-decoration: none;
+  line-height: 45px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  font-size: 18px;
+  transition: 500ms;
+}
+
+aside a:hover {
+  background: #616161;
+}
+
+aside a.active {
+  background: #fbc02d;
+  color: black;
+}
+
+main {
+  flex: 1;
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+
+.algorithm-layout {
+  padding: 0 30px;
+  height: 1500px;
+}
+
+.algorithm-layout a {
+  display: block;
+  font-size: 24px;
+  height: 55px;
+  line-height: 55px;
+  color: #fbc02d;
+}
+.complexity,
+.array {
+  font-family: "Roboto";
+  margin-top: 10px;
+}
+.example-title {
+  margin-top: 15px;
+  font-size: 20px;
+  color: #fbc02d;
+}
+
+.item-input,
+.result-button {
+  display: block;
+  margin-top: 15px;
+  width: 240px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 16px;
+}
+.result-button {
+  cursor: pointer;
+  color: #212121;
+  background: #fbc02d;
+  transition: 300ms;
+}
+.result-button:hover {
+  background: #424242;
+  color:#fbc02d;
+}

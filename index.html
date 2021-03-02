@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Grokking algorithms</title>
+    <meta name="description" content="Grokking algorithms" />
+    <meta name="author" content="https://github.com/ResidentTGT" />
+    <link rel="stylesheet" href="styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="node_modules/roboto-fontface/css/roboto/roboto-fontface.css"
+    />
+    <script type="text/javascript" src="scripts/navigation.js"></script>
+  </head>
+  <body>
+    <aside>
+      <a href="#binary_search">Binary search algorithm</a>
+      <a href="#lol_search">lol Search</a>
+    </aside>
+    <main>
+      <div class="algorithm-layout">
+        <a name="binary_search">Binary search algorithm</a>
+        <div>
+          In computer science, binary search, also known as half-interval
+          search, logarithmic search, or binary chop, is a search algorithm that
+          finds the position of a target value within a sorted array. Binary
+          search compares the target value to the middle element of the array.
+          If they are not equal, the half in which the target cannot lie is
+          eliminated and the search continues on the remaining half, again
+          taking the middle element to compare to the target value, and
+          repeating this until the target value is found. If the search ends
+          with the remaining half being empty, the target is not in the array.
+        </div>
+        <div class="complexity">Complexity: O(log(n))</div>
+        <div class="example-title">Example</div>
+        <div class="array">Sorted array: [1...100]</div>
+        <input class="item-input" type="number" placeholder="Enter number from 1 to 100"  />
+        <button class="result-button">Find!</button>
+      </div>
+      <div class="algorithm-layout">
+        <a name="lol_search">Another Search</a>
+      </div>
+    </main>
+  </body>
+</html>
