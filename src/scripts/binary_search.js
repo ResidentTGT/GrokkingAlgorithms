@@ -1,0 +1,1 @@
+function binarySearch(array, item) {}

@@ -1,12 +1,16 @@
 {
-  "name": "grokking_algorithms",
-  "version": "0.1.0",
-  "scripts": {
-    "start": "http-server -c-1"
-  },
-  "dependencies": {
-    "http-server": "^0.12.3",
-    "roboto-fontface": "^0.10.0"
-  },
-  "devDependencies": {}
+    "name": "grokking_algorithms",
+    "version": "0.1.0",
+    "scripts": {
+        "start": "http-server -c-1",
+        "lint": "eslint --fix && prettier --write ."
+    },
+    "dependencies": {
+        "http-server": "^0.12.3",
+        "roboto-fontface": "^0.10.0"
+    },
+    "devDependencies": {
+        "eslint": "^7.21.0",
+        "prettier": "^2.2.1"
+    }
 }

@@ -1,3 +1,0 @@
-function binarySearch(array,item){
-    
-}
