@@ -1,0 +1,60 @@
+.algorithm-layout {
+    padding: 0 30px;
+    height: 1500px;
+}
+
+.algorithm-layout a {
+    display: block;
+    font-size: 24px;
+    height: 55px;
+    line-height: 55px;
+    color: #fbc02d;
+}
+.complexity,
+.array,
+.result {
+    font-weight: 400;
+    margin-top: 10px;
+}
+.example-title {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #fbc02d;
+}
+
+.item-input,
+.result-button {
+    margin-top: 15px;
+    width: 240px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 16px;
+}
+
+.error {
+    transition: 200ms;
+    opacity: 0;
+    color: #f44336;
+    margin-left: 20px;
+}
+
+.show {
+    opacity: 1;
+}
+
+.result-button {
+    display: block;
+    cursor: pointer;
+    color: #212121;
+    background: #fbc02d;
+    transition: 300ms;
+}
+
+.result-button:hover {
+    background: #424242;
+    color: #fbc02d;
+}

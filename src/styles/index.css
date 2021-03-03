@@ -9,7 +9,8 @@ body {
     margin: 0;
     display: flex;
     background: #212121;
-    font-family: 'Roboto-Light', Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
     color: white;
 }
 
@@ -55,51 +56,4 @@ main {
     flex: 1;
     overflow: auto;
     scroll-behavior: smooth;
-}
-
-.algorithm-layout {
-    padding: 0 30px;
-    height: 1500px;
-}
-
-.algorithm-layout a {
-    display: block;
-    font-size: 24px;
-    height: 55px;
-    line-height: 55px;
-    color: #fbc02d;
-}
-.complexity,
-.array {
-    font-family: 'Roboto';
-    margin-top: 10px;
-}
-.example-title {
-    margin-top: 15px;
-    font-size: 20px;
-    color: #fbc02d;
-}
-
-.item-input,
-.result-button {
-    display: block;
-    margin-top: 15px;
-    width: 240px;
-    height: 35px;
-    border: none;
-    border-radius: 5px;
-    padding: 0 10px;
-    box-sizing: border-box;
-    outline: none;
-    font-size: 16px;
-}
-.result-button {
-    cursor: pointer;
-    color: #212121;
-    background: #fbc02d;
-    transition: 300ms;
-}
-.result-button:hover {
-    background: #424242;
-    color: #fbc02d;
 }

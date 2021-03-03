@@ -6,8 +6,7 @@
         "lint": "eslint --fix && prettier --write ."
     },
     "dependencies": {
-        "http-server": "^0.12.3",
-        "roboto-fontface": "^0.10.0"
+        "http-server": "^0.12.3"
     },
     "devDependencies": {
         "eslint": "^7.21.0",
