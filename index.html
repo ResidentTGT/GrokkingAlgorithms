@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet" />
         <script type="text/javascript" src="src/scripts/navigation.js"></script>
         <script type="text/javascript" src="src/scripts/binary_search.js"></script>
+        <script type="text/javascript" src="src/scripts/selection_sort.js"></script>
     </head>
 
     <body>
@@ -34,7 +35,7 @@
                 <div class="array">Sorted array: [0...999]</div>
                 <input class="item-input" type="number" placeholder="Enter number from 0 to 999" />
                 <span class="error">Invalid value! Enter number from 0 to 999!</span>
-                <button class="result-button">Find!</button>
+                <button class="action-button">Find!</button>
                 <div class="result"></div>
             </div>
 
@@ -55,10 +56,9 @@
                 </div>
                 <div class="complexity">Complexity: O(n<sup>2</sup>)</div>
                 <div class="example-title">Example</div>
-                <div class="array">Sorted array: [0...999]</div>
-                <input class="item-input" type="number" placeholder="Enter number from 0 to 999" />
-                <span class="error">Invalid value! Enter number from 0 to 999!</span>
-                <button class="result-button">Find!</button>
+                <button class="action-button generate">Generate unsorted array!</button>
+                <div class="array">Unsorted array: []</div>
+                <button class="action-button sort" disabled>Sort!</button>
                 <div class="result"></div>
             </div>
         </main>

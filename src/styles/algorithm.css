@@ -20,6 +20,9 @@
     font-weight: 400;
     margin-top: 15px;
 }
+.result{
+    line-height: 25px;
+}
 .example-title {
     margin-top: 15px;
     font-size: 20px;
@@ -27,7 +30,7 @@
 }
 
 .item-input,
-.result-button {
+.action-button {
     margin-top: 15px;
     width: 240px;
     height: 35px;
@@ -50,7 +53,7 @@
     opacity: 1;
 }
 
-.result-button {
+.action-button {
     display: block;
     cursor: pointer;
     color: #212121;
@@ -58,7 +61,11 @@
     transition: 300ms;
 }
 
-.result-button:hover {
+.action-button:hover:not(:disabled) {
     background: #424242;
     color: #fbc02d;
+}
+
+.action-button:disabled {
+    background: #616161;
 }
