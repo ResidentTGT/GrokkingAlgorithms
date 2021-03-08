@@ -1,6 +1,9 @@
 .algorithm-layout {
-    padding: 0 30px;
-    height: 1500px;
+    padding: 0 30px 20px 30px;
+}
+
+.algorithm-layout:not(:first-child) a {
+    border-top: 1px solid #424242;
 }
 
 .algorithm-layout a {
@@ -10,11 +13,12 @@
     line-height: 55px;
     color: #fbc02d;
 }
+
 .complexity,
 .array,
 .result {
     font-weight: 400;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 .example-title {
     margin-top: 15px;
