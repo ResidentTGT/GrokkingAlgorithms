@@ -29,16 +29,14 @@
     function sort() {
         const sortedArray = [];
         let totalSteps = 0;
+
         for (let i = 0; i < arrayLength; i++) {
             const { minIndex, steps } = findMin(unsortedArray);
             totalSteps += steps;
             sortedArray.push(unsortedArray.splice(minIndex, 1));
         }
 
-        document.querySelector('.selection-sort .result').innerHTML = `Sorted array (${
-            sortedArray.length
-        } items): [${sortedArray.join(' ,')}].<br> This algorithm took ${totalSteps} steps to find the result.`;
-        document.querySelector('.selection-sort .action-button.sort').setAttribute('disabled', true);
+        showResult(sortedArray, totalSteps);
     }
 
     function findMin(array) {
@@ -55,5 +53,15 @@
         }
 
         return { minIndex, steps };
+    }
+
+    function showResult(sortedArray, totalSteps) {
+        document.querySelector('.selection-sort .result').innerHTML = `Sorted array (${
+            sortedArray.length
+        } items): [${sortedArray.join(' ,')}].
+        <br>This algorithm took ${totalSteps} steps to find the result.
+        <br>The real complexity is O(1/2 * n<sup>2</sup> - ${arrayLength}/2) due to the sequence of the number of items checked: n, n-1, n-2...2, 1. But constants in Big O notation are ignored.`;
+
+        document.querySelector('.selection-sort .action-button.sort').setAttribute('disabled', true);
     }
 })();
