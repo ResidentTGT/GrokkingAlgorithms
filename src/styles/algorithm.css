@@ -14,13 +14,17 @@
     color: #fbc02d;
 }
 
+.description {
+    width: 800px;
+}
+
 .complexity,
-.array,
+.condition,
 .result {
     font-weight: 400;
     margin-top: 15px;
 }
-.result{
+.result {
     line-height: 25px;
 }
 .example-title {

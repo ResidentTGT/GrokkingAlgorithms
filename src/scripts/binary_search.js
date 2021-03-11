@@ -11,15 +11,11 @@
     });
 
     function binarySearch(input) {
-        const value = +input;
-
-        if (!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue) {
-            showError();
-            showResult();
+        if (!isValidInput(input)) {
             return;
-        } else {
-            showError(false);
         }
+
+        const value = +input;
 
         let startIndex = 0;
         let endIndex = array.length - 1;
@@ -45,6 +41,19 @@
         }
 
         showResult(step);
+    }
+
+    function isValidInput(input) {
+        const value = +input;
+
+        if (!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue) {
+            showError();
+            showResult();
+            return false;
+        } else {
+            showError(false);
+            return true;
+        }
     }
 
     function showError(show = true) {

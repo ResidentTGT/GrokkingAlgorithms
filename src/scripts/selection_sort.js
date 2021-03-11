@@ -5,27 +5,6 @@
     window.addEventListener('DOMContentLoaded', () => addGenerateButtonEventListener());
     window.addEventListener('DOMContentLoaded', () => addSortButtonEventListener());
 
-    function addGenerateButtonEventListener() {
-        document.querySelector('.selection-sort .action-button.generate').addEventListener('click', () => {
-            unsortedArray = Array(arrayLength)
-                .fill()
-                .map(() => Math.ceil(Math.random() * arrayLength));
-
-            document.querySelector(
-                '.selection-sort .array',
-            ).textContent = `Unsorted array (${arrayLength} items): [${unsortedArray.join(', ')}]`;
-
-            document.querySelector('.selection-sort .action-button.sort').removeAttribute('disabled');
-            document.querySelector('.selection-sort .result').innerHTML = '';
-        });
-    }
-
-    function addSortButtonEventListener() {
-        document.querySelector('.selection-sort .action-button.sort').addEventListener('click', () => {
-            sort();
-        });
-    }
-
     function sort() {
         const sortedArray = [];
         let totalSteps = 0;
@@ -63,5 +42,26 @@
         <br>The real complexity is O(1/2 * n<sup>2</sup> - ${arrayLength}/2) due to the sequence of the number of items checked: n, n-1, n-2...2, 1. But constants in Big O notation are ignored.`;
 
         document.querySelector('.selection-sort .action-button.sort').setAttribute('disabled', true);
+    }
+
+    function addGenerateButtonEventListener() {
+        document.querySelector('.selection-sort .action-button.generate').addEventListener('click', () => {
+            unsortedArray = Array(arrayLength)
+                .fill()
+                .map(() => Math.ceil(Math.random() * arrayLength));
+
+            document.querySelector(
+                '.selection-sort .condition',
+            ).textContent = `Unsorted array (${arrayLength} items): [${unsortedArray.join(', ')}]`;
+
+            document.querySelector('.selection-sort .action-button.sort').removeAttribute('disabled');
+            document.querySelector('.selection-sort .result').innerHTML = '';
+        });
+    }
+
+    function addSortButtonEventListener() {
+        document.querySelector('.selection-sort .action-button.sort').addEventListener('click', () => {
+            sort();
+        });
     }
 })();
