@@ -1,8 +1,7 @@
 (() => {
     const template = document.createElement('template');
 
-    template.innerHTML =
-        //html
+    template.innerHTML =//html
         `
         <link rel="stylesheet" href="src/styles/algorithm.css" />
         <link rel="stylesheet" href="src/styles/divideConquer.css" />
@@ -17,16 +16,18 @@
         <div class="condition">
             In this example we will divide the rectangle into equal squares. Goal: determine the largest size of the square.
         </div>
-        <span>Enter values of the sides of the rectangle from 1 to 1000</span>
+        <span>Enter values of the sides of the rectangle from 1 to 50</span>
         <input class="item-input" type="number"  />
         <input class="item-input" type="number"  />
-        <span class="error">Invalid value! Enter number from 1 to 1000!</span>
+        <span class="error">Invalid value! Enter number from 1 to 50!</span>
         <button class="action-button">Determine the largest size!</button>
         <div class="result"></div>
+        <div class="graph"></div>
     `;
 
     const minValue = 1;
-    const maxValue = 1000;
+    const maxValue = 50;
+    const squareWrapperSize = 300;
 
     class DivideConquerComponent extends HTMLElement {
         constructor() {
@@ -61,7 +62,7 @@
 
             const maxSquareSize = this.getMaxSizeRecursion(width, height);
 
-            this.showResult(maxSquareSize);
+            this.showResult(maxSquareSize, width, height);
         }
 
         getMaxSizeRecursion(width, height) {
@@ -92,13 +93,32 @@
             }
         }
 
-        showResult(result) {
+        showResult(result, width, height) {
             const resultElem = this.shadowRoot.querySelector('.result');
+            const graphElem = this.shadowRoot.querySelector('.graph');
 
             if (result) {
-                resultElem.textContent = `${result}`;
+                const max = Math.max(width, height);
+
+                resultElem.textContent = `Width: ${width}, height: ${height}, max square size: ${result}.`;
+
+                graphElem.style.display = 'flex';
+                graphElem.innerHTML = '';
+                graphElem.style.width = `${(width / max) * squareWrapperSize}px`;
+                graphElem.style.height = `${(height / max) * squareWrapperSize}px`;
+
+                const squaresCount = ((width / result) * height) / result;
+                const squareSizePx = (result / max) * squareWrapperSize;
+
+                for (let i = 0; i < squaresCount; i++) {
+                    const square = document.createElement('div');
+                    square.style.width = square.style.height = `${squareSizePx}px`;
+                    square.classList.add('square');
+                    graphElem.appendChild(square);
+                }
             } else {
                 resultElem.textContent = '';
+                graphElem.style.display = 'none';
             }
         }
     }
