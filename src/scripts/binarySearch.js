@@ -33,30 +33,40 @@
             this.attachShadow({ mode: 'open' });
             this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-            this.binarySearch = this.binarySearch.bind(this);
+            this.searchButtonHandler = this.searchButtonHandler.bind(this);
         }
 
         connectedCallback() {
-            this.shadowRoot.querySelector('.action-button').addEventListener('click', this.binarySearch);
+            this.shadowRoot.querySelector('.action-button').addEventListener('click', this.searchButtonHandler);
         }
 
         disconnectedCallback() {
             this.shadowRoot.querySelector('.action-button').removeEventListener();
         }
 
-        binarySearch() {
+        searchButtonHandler() {
             const input = this.shadowRoot.querySelector('.item-input')?.value;
 
+            const searchValue = +input;
+
             if (!this.isValidInput(input)) {
+                this.showError();
+                this.showResult();
                 return;
+            } else {
+                this.showError(false);
             }
 
-            const value = +input;
+            const steps = this.binarySearch(array, searchValue);
 
+            this.showResult(steps);
+        }
+
+        binarySearch(array, searchValue) {
             let startIndex = 0;
             let endIndex = array.length - 1;
 
-            let step = 1;
+            let steps = 1;
 
             let isFound = false;
 
@@ -64,32 +74,25 @@
                 const guessIndex = Math.trunc((startIndex + endIndex) / 2);
                 const guess = array[guessIndex];
 
-                if (value > guess) {
+                if (searchValue > guess) {
                     startIndex = guessIndex + 1;
-                } else if (value < guess) {
+                } else if (searchValue < guess) {
                     endIndex = guessIndex - 1;
                 } else {
                     isFound = true;
                     break;
                 }
 
-                step += 1;
+                steps += 1;
             }
 
-            this.showResult(step);
+            return steps;
         }
 
         isValidInput(input) {
             const value = +input;
 
-            if (!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue) {
-                this.showError();
-                this.showResult();
-                return false;
-            } else {
-                this.showError(false);
-                return true;
-            }
+            return !(!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue);
         }
 
         showError(show = true) {
