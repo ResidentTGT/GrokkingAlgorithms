@@ -1,8 +1,7 @@
 (() => {
     const template = document.createElement('template');
 
-    template.innerHTML = //html
-    `
+    template.innerHTML = `
         <link rel="stylesheet" href="src/styles/algorithm.css" />
         <div class="description">
             In computer science, binary search, also known as half-interval search, logarithmic search, or

@@ -1,8 +1,7 @@
 (() => {
     const template = document.createElement('template');
 
-    template.innerHTML = //html
-        `
+    template.innerHTML = `
     <link rel="stylesheet" href="src/styles/algorithm.css" />
     <div class="description">
     Quicksort is an in-place sorting algorithm. When implemented well, it can be somewhat faster than merge sort and about two or three times faster than heapsort.<br>
@@ -80,14 +79,14 @@
             this.shadowRoot.querySelector(' .result').innerHTML = `Sorted array (${
                 sortedArray.length
             } items): [${sortedArray.join(' ,')}].
-            <br>This algorithm took ${totalSteps} steps to find the result.
+            <br>This algorithm took ${totalSteps} steps to sort the array.
             <br>This is close to the theoretical complexity of the algorithm O(n * log(n)) = 30 * log(30) &#8776; 147`;
 
             this.shadowRoot.querySelector('.action-button.sort').setAttribute('disabled', true);
         }
 
         generateArrayClickHandler() {
-            unsortedArray = this.shuffleArray([...Array(arrayLength).keys()]);
+            unsortedArray = window.shuffleArray([...Array(arrayLength).keys()]);
 
             this.shadowRoot.querySelector(
                 '.condition',
@@ -95,17 +94,6 @@
 
             this.shadowRoot.querySelector('.action-button.sort').removeAttribute('disabled');
             this.shadowRoot.querySelector('.result').innerHTML = '';
-        }
-
-        shuffleArray(array) {
-            const shuffledArray = array.slice();
-
-            for (let i = shuffledArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-            }
-
-            return shuffledArray;
         }
     }
 

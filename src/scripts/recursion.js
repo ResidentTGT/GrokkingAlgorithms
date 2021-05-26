@@ -1,8 +1,7 @@
 (() => {
     const template = document.createElement('template');
 
-    template.innerHTML = //html
-    `
+    template.innerHTML = `
     <link rel="stylesheet" href="src/styles/algorithm.css" />
     <div class="description">
         Recursion occurs when a thing is defined in terms of itself or of its type. The most common

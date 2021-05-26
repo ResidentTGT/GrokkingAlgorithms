@@ -1,8 +1,7 @@
 (() => {
     const template = document.createElement('template');
 
-    template.innerHTML =//html
-        `
+    template.innerHTML = `
         <link rel="stylesheet" href="src/styles/algorithm.css" />
         <link rel="stylesheet" href="src/styles/divideConquer.css" />
         <div class="description">

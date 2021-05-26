@@ -1,8 +1,7 @@
 (() => {
     const template = document.createElement('template');
 
-    template.innerHTML = //html
-    `
+    template.innerHTML = `
     <link rel="stylesheet" href="src/styles/algorithm.css" />
     <div class="description">
         In computer science, selection sort is an in-place comparison sorting algorithm. It has an O(n2)
@@ -89,23 +88,14 @@
         }
 
         generateArray() {
-            unsortedArray = this.shuffleArray([...Array(arrayLength).keys()]);
+            unsortedArray = window.shuffleArray([...Array(arrayLength).keys()]);
 
-            this.shadowRoot.querySelector('.condition').textContent = `Unsorted array (${arrayLength} items): [${unsortedArray.join(', ')}]`;
+            this.shadowRoot.querySelector(
+                '.condition',
+            ).textContent = `Unsorted array (${arrayLength} items): [${unsortedArray.join(', ')}]`;
 
             this.shadowRoot.querySelector('.action-button.sort').removeAttribute('disabled');
             this.shadowRoot.querySelector('.result').innerHTML = '';
-        }
-
-        shuffleArray(array) {
-            const shuffledArray = array.slice();
-
-            for (let i = shuffledArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-            }
-
-            return shuffledArray;
         }
     }
 
