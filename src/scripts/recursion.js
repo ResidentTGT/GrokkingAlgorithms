@@ -1,7 +1,6 @@
-(() => {
-    const template = document.createElement('template');
+const template = document.createElement('template');
 
-    template.innerHTML = `
+template.innerHTML = `
     <link rel="stylesheet" href="src/styles/algorithm.css" />
     <div class="description">
         Recursion occurs when a thing is defined in terms of itself or of its type. The most common
@@ -24,80 +23,79 @@
     <div class="result"></div>
     `;
 
-    const minValue = 1;
-    const maxValue = 10;
+const minValue = 1;
+const maxValue = 10;
 
-    class RecursionComponent extends HTMLElement {
-        constructor() {
-            super();
+class RecursionComponent extends HTMLElement {
+    constructor() {
+        super();
 
-            this.attachShadow({ mode: 'open' });
-            this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-            this.recursionClickHandler = this.recursionClickHandler.bind(this);
+        this.recursionClickHandler = this.recursionClickHandler.bind(this);
+    }
+
+    connectedCallback() {
+        this.shadowRoot.querySelector('.action-button').addEventListener('click', this.recursionClickHandler);
+    }
+
+    disconnectedCallback() {
+        this.shadowRoot.querySelector('.action-button').removeEventListener();
+    }
+
+    recursionClickHandler() {
+        const input = this.shadowRoot.querySelector('.item-input')?.value;
+
+        if (!this.isValidInput(input)) {
+            return;
         }
 
-        connectedCallback() {
-            this.shadowRoot.querySelector('.action-button').addEventListener('click', this.recursionClickHandler);
-        }
+        const factorial = this.calcFactorial(+input);
 
-        disconnectedCallback() {
-            this.shadowRoot.querySelector('.action-button').removeEventListener();
-        }
+        this.showResult(input, factorial);
+    }
 
-        recursionClickHandler() {
-            const input = this.shadowRoot.querySelector('.item-input')?.value;
-
-            if (!this.isValidInput(input)) {
-                return;
-            }
-
-            const factorial = this.calcFactorial(+input);
-
-            this.showResult(input, factorial);
-        }
-
-        calcFactorial(input) {
-            if (input === 1) {
-                return 1;
-            } else {
-                return input * this.calcFactorial(input - 1);
-            }
-        }
-
-        isValidInput(input) {
-            const value = +input;
-
-            if (!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue) {
-                this.showError();
-                this.showResult();
-                return false;
-            } else {
-                this.showError(false);
-                return true;
-            }
-        }
-
-        showError(show = true) {
-            const errorElem = this.shadowRoot.querySelector('.error');
-
-            if (show) {
-                errorElem.classList.add('show');
-            } else {
-                errorElem.classList.remove('show');
-            }
-        }
-
-        showResult(input, result) {
-            const resultElem = this.shadowRoot.querySelector('.result');
-
-            if (result) {
-                resultElem.textContent = `The factorial of ${input} is ${result}.`;
-            } else {
-                resultElem.textContent = '';
-            }
+    calcFactorial(input) {
+        if (input === 1) {
+            return 1;
+        } else {
+            return input * this.calcFactorial(input - 1);
         }
     }
 
-    customElements.define('recursion-component', RecursionComponent);
-})();
+    isValidInput(input) {
+        const value = +input;
+
+        if (!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue) {
+            this.showError();
+            this.showResult();
+            return false;
+        } else {
+            this.showError(false);
+            return true;
+        }
+    }
+
+    showError(show = true) {
+        const errorElem = this.shadowRoot.querySelector('.error');
+
+        if (show) {
+            errorElem.classList.add('show');
+        } else {
+            errorElem.classList.remove('show');
+        }
+    }
+
+    showResult(input, result) {
+        const resultElem = this.shadowRoot.querySelector('.result');
+
+        if (result) {
+            resultElem.textContent = `The factorial of ${input} is ${result}.`;
+        } else {
+            resultElem.textContent = '';
+        }
+    }
+}
+
+customElements.define('recursion-component', RecursionComponent);

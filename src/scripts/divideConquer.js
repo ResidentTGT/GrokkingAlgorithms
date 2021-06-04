@@ -1,9 +1,25 @@
-(() => {
-    const template = document.createElement('template');
+const template = document.createElement('template');
 
-    template.innerHTML = `
+template.innerHTML = `
         <link rel="stylesheet" href="src/styles/algorithm.css" />
-        <link rel="stylesheet" href="src/styles/divideConquer.css" />
+        
+        <style>
+        .item-input {
+            width: 80px;
+            margin-left: 10px;
+        }
+        
+        .graph {
+            flex-flow: wrap;
+            background: #424242;
+        }
+        
+        .square {
+            border: 1px solid white;
+            box-sizing: border-box;
+        }      
+        </style>
+
         <div class="description">
         A divide-and-conquer algorithm recursively breaks down a problem into two or more sub-problems of the same or related type, until these become simple enough to be solved directly.
         The solutions to the sub-problems are then combined to give a solution to the original problem. <br />
@@ -24,103 +40,102 @@
         <div class="graph"></div>
     `;
 
-    const minValue = 1;
-    const maxValue = 50;
-    const squareWrapperSize = 300;
+const minValue = 1;
+const maxValue = 50;
+const squareWrapperSize = 300;
 
-    class DivideConquerComponent extends HTMLElement {
-        constructor() {
-            super();
+class DivideConquerComponent extends HTMLElement {
+    constructor() {
+        super();
 
-            this.attachShadow({ mode: 'open' });
-            this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-            this.divideConquer = this.divideConquer.bind(this);
+        this.divideConquer = this.divideConquer.bind(this);
+    }
+
+    connectedCallback() {
+        this.shadowRoot.querySelector('.action-button').addEventListener('click', this.divideConquer);
+    }
+
+    disconnectedCallback() {
+        this.shadowRoot.querySelector('.action-button').removeEventListener();
+    }
+
+    divideConquer() {
+        const inputs = this.shadowRoot.querySelectorAll('.item-input');
+
+        if (inputs.length !== 2 || Array.from(inputs).some(i => !this.isValidInput(i.value))) {
+            this.showError();
+            this.showResult();
+            return;
+        } else {
+            this.showError(false);
         }
 
-        connectedCallback() {
-            this.shadowRoot.querySelector('.action-button').addEventListener('click', this.divideConquer);
-        }
+        const [width, height] = [+inputs[0].value, +inputs[1].value];
 
-        disconnectedCallback() {
-            this.shadowRoot.querySelector('.action-button').removeEventListener();
-        }
+        const maxSquareSize = this.getMaxSizeRecursion(width, height);
 
-        divideConquer() {
-            const inputs = this.shadowRoot.querySelectorAll('.item-input');
+        this.showResult(maxSquareSize, width, height);
+    }
 
-            if (inputs.length !== 2 || Array.from(inputs).some(i => !this.isValidInput(i.value))) {
-                this.showError();
-                this.showResult();
-                return;
-            } else {
-                this.showError(false);
-            }
+    getMaxSizeRecursion(width, height) {
+        const [min, max] = width > height ? [height, width] : [width, height];
 
-            const [width, height] = [+inputs[0].value, +inputs[1].value];
+        const rest = max % min;
 
-            const maxSquareSize = this.getMaxSizeRecursion(width, height);
-
-            this.showResult(maxSquareSize, width, height);
-        }
-
-        getMaxSizeRecursion(width, height) {
-            const [min, max] = width > height ? [height, width] : [width, height];
-
-            const rest = max % min;
-
-            if (rest === 0) {
-                return min;
-            } else {
-                return this.getMaxSizeRecursion(rest, min);
-            }
-        }
-
-        isValidInput(input) {
-            const value = +input;
-
-            return !(!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue);
-        }
-
-        showError(show = true) {
-            const errorElem = this.shadowRoot.querySelector('.error');
-
-            if (show) {
-                errorElem.classList.add('show');
-            } else {
-                errorElem.classList.remove('show');
-            }
-        }
-
-        showResult(result, width, height) {
-            const resultElem = this.shadowRoot.querySelector('.result');
-            const graphElem = this.shadowRoot.querySelector('.graph');
-
-            if (result) {
-                const max = Math.max(width, height);
-
-                resultElem.textContent = `Width: ${width}, height: ${height}, max square size: ${result}.`;
-
-                graphElem.style.display = 'flex';
-                graphElem.innerHTML = '';
-                graphElem.style.width = `${(width / max) * squareWrapperSize}px`;
-                graphElem.style.height = `${(height / max) * squareWrapperSize}px`;
-
-                const squaresCount = ((width / result) * height) / result;
-                const squareSizePx = (result / max) * squareWrapperSize;
-
-                for (let i = 0; i < squaresCount; i++) {
-                    const square = document.createElement('div');
-                    square.style.width = square.style.height = `${squareSizePx}px`;
-                    square.classList.add('square');
-                    graphElem.appendChild(square);
-                }
-            } else {
-                resultElem.textContent = '';
-                graphElem.style.display = 'none';
-            }
+        if (rest === 0) {
+            return min;
+        } else {
+            return this.getMaxSizeRecursion(rest, min);
         }
     }
 
-    customElements.define('divide-conquer-component', DivideConquerComponent);
-})();
+    isValidInput(input) {
+        const value = +input;
+
+        return !(!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue);
+    }
+
+    showError(show = true) {
+        const errorElem = this.shadowRoot.querySelector('.error');
+
+        if (show) {
+            errorElem.classList.add('show');
+        } else {
+            errorElem.classList.remove('show');
+        }
+    }
+
+    showResult(result, width, height) {
+        const resultElem = this.shadowRoot.querySelector('.result');
+        const graphElem = this.shadowRoot.querySelector('.graph');
+
+        if (result) {
+            const max = Math.max(width, height);
+
+            resultElem.textContent = `Width: ${width}, height: ${height}, max square size: ${result}.`;
+
+            graphElem.style.display = 'flex';
+            graphElem.innerHTML = '';
+            graphElem.style.width = `${(width / max) * squareWrapperSize}px`;
+            graphElem.style.height = `${(height / max) * squareWrapperSize}px`;
+
+            const squaresCount = ((width / result) * height) / result;
+            const squareSizePx = (result / max) * squareWrapperSize;
+
+            for (let i = 0; i < squaresCount; i++) {
+                const square = document.createElement('div');
+                square.style.width = square.style.height = `${squareSizePx}px`;
+                square.classList.add('square');
+                graphElem.appendChild(square);
+            }
+        } else {
+            resultElem.textContent = '';
+            graphElem.style.display = 'none';
+        }
+    }
+}
+
+customElements.define('divide-conquer-component', DivideConquerComponent);

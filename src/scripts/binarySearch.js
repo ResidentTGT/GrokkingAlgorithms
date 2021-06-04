@@ -1,7 +1,6 @@
-(() => {
-    const template = document.createElement('template');
+const template = document.createElement('template');
 
-    template.innerHTML = `
+template.innerHTML = `
         <link rel="stylesheet" href="src/styles/algorithm.css" />
         <div class="description">
             In computer science, binary search, also known as half-interval search, logarithmic search, or
@@ -21,99 +20,98 @@
         <div class="result"></div>
     `;
 
-    const array = [...Array(1000).keys()];
-    const minValue = 0;
-    const maxValue = 999;
+const array = [...Array(1000).keys()];
+const minValue = 0;
+const maxValue = 999;
 
-    class BinarySearchComponent extends HTMLElement {
-        constructor() {
-            super();
+class BinarySearchComponent extends HTMLElement {
+    constructor() {
+        super();
 
-            this.attachShadow({ mode: 'open' });
-            this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-            this.searchButtonHandler = this.searchButtonHandler.bind(this);
+        this.searchButtonHandler = this.searchButtonHandler.bind(this);
+    }
+
+    connectedCallback() {
+        this.shadowRoot.querySelector('.action-button').addEventListener('click', this.searchButtonHandler);
+    }
+
+    disconnectedCallback() {
+        this.shadowRoot.querySelector('.action-button').removeEventListener();
+    }
+
+    searchButtonHandler() {
+        const input = this.shadowRoot.querySelector('.item-input')?.value;
+
+        const searchValue = +input;
+
+        if (!this.isValidInput(input)) {
+            this.showError();
+            this.showResult();
+            return;
+        } else {
+            this.showError(false);
         }
 
-        connectedCallback() {
-            this.shadowRoot.querySelector('.action-button').addEventListener('click', this.searchButtonHandler);
-        }
+        const steps = this.binarySearch(array, searchValue);
 
-        disconnectedCallback() {
-            this.shadowRoot.querySelector('.action-button').removeEventListener();
-        }
+        this.showResult(steps);
+    }
 
-        searchButtonHandler() {
-            const input = this.shadowRoot.querySelector('.item-input')?.value;
+    binarySearch(array, searchValue) {
+        let startIndex = 0;
+        let endIndex = array.length - 1;
 
-            const searchValue = +input;
+        let steps = 1;
 
-            if (!this.isValidInput(input)) {
-                this.showError();
-                this.showResult();
-                return;
+        let isFound = false;
+
+        while (!isFound) {
+            const guessIndex = Math.trunc((startIndex + endIndex) / 2);
+            const guess = array[guessIndex];
+
+            if (searchValue > guess) {
+                startIndex = guessIndex + 1;
+            } else if (searchValue < guess) {
+                endIndex = guessIndex - 1;
             } else {
-                this.showError(false);
+                isFound = true;
+                break;
             }
 
-            const steps = this.binarySearch(array, searchValue);
-
-            this.showResult(steps);
+            steps += 1;
         }
 
-        binarySearch(array, searchValue) {
-            let startIndex = 0;
-            let endIndex = array.length - 1;
+        return steps;
+    }
 
-            let steps = 1;
+    isValidInput(input) {
+        const value = +input;
 
-            let isFound = false;
+        return !(!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue);
+    }
 
-            while (!isFound) {
-                const guessIndex = Math.trunc((startIndex + endIndex) / 2);
-                const guess = array[guessIndex];
+    showError(show = true) {
+        const errorElem = this.shadowRoot.querySelector('.error');
 
-                if (searchValue > guess) {
-                    startIndex = guessIndex + 1;
-                } else if (searchValue < guess) {
-                    endIndex = guessIndex - 1;
-                } else {
-                    isFound = true;
-                    break;
-                }
-
-                steps += 1;
-            }
-
-            return steps;
-        }
-
-        isValidInput(input) {
-            const value = +input;
-
-            return !(!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue);
-        }
-
-        showError(show = true) {
-            const errorElem = this.shadowRoot.querySelector('.error');
-
-            if (show) {
-                errorElem.classList.add('show');
-            } else {
-                errorElem.classList.remove('show');
-            }
-        }
-
-        showResult(result) {
-            const resultElem = this.shadowRoot.querySelector('.result');
-
-            if (result) {
-                resultElem.textContent = `This algorithm took ${result} steps to find the result.`;
-            } else {
-                resultElem.textContent = '';
-            }
+        if (show) {
+            errorElem.classList.add('show');
+        } else {
+            errorElem.classList.remove('show');
         }
     }
 
-    customElements.define('binary-search-component', BinarySearchComponent);
-})();
+    showResult(result) {
+        const resultElem = this.shadowRoot.querySelector('.result');
+
+        if (result) {
+            resultElem.textContent = `This algorithm took ${result} steps to find the result.`;
+        } else {
+            resultElem.textContent = '';
+        }
+    }
+}
+
+customElements.define('binary-search-component', BinarySearchComponent);

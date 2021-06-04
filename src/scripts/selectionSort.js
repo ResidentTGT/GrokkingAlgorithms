@@ -1,7 +1,6 @@
-(() => {
-    const template = document.createElement('template');
+const template = document.createElement('template');
 
-    template.innerHTML = `
+template.innerHTML = `
     <link rel="stylesheet" href="src/styles/algorithm.css" />
     <div class="description">
         In computer science, selection sort is an in-place comparison sorting algorithm. It has an O(n2)
@@ -24,80 +23,80 @@
     <div class="result"></div>
     `;
 
-    let unsortedArray = [];
-    const arrayLength = 30;
+const arrayLength = 30;
 
-    class SelectionSortComponent extends HTMLElement {
-        constructor() {
-            super();
+class SelectionSortComponent extends HTMLElement {
+    constructor() {
+        super();
 
-            this.attachShadow({ mode: 'open' });
-            this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this._unsortedArray = [];
 
-            this.generateArray = this.generateArray.bind(this);
-            this.sort = this.sort.bind(this);
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+        this.generateArray = this.generateArray.bind(this);
+        this.sort = this.sort.bind(this);
+    }
+
+    connectedCallback() {
+        this.shadowRoot.querySelector('.action-button.generate').addEventListener('click', this.generateArray);
+        this.shadowRoot.querySelector('.action-button.sort').addEventListener('click', this.sort);
+    }
+
+    disconnectedCallback() {
+        this.shadowRoot.querySelector('.action-button.generate').removeEventListener();
+        this.shadowRoot.querySelector('.action-button.sort').removeEventListener();
+    }
+
+    sort() {
+        const sortedArray = [];
+        let totalSteps = 0;
+
+        for (let i = 0; i < arrayLength; i++) {
+            const { minIndex, steps } = this.findMin(this._unsortedArray);
+            totalSteps += steps;
+            sortedArray.push(this._unsortedArray.splice(minIndex, 1));
         }
 
-        connectedCallback() {
-            this.shadowRoot.querySelector('.action-button.generate').addEventListener('click', this.generateArray);
-            this.shadowRoot.querySelector('.action-button.sort').addEventListener('click', this.sort);
-        }
+        this.showResult(sortedArray, totalSteps);
+    }
 
-        disconnectedCallback() {
-            this.shadowRoot.querySelector('.action-button.generate').removeEventListener();
-            this.shadowRoot.querySelector('.action-button.sort').removeEventListener();
-        }
+    findMin(array) {
+        let steps = 0;
+        let minIndex = 0;
+        let min = array[minIndex];
 
-        sort() {
-            const sortedArray = [];
-            let totalSteps = 0;
-
-            for (let i = 0; i < arrayLength; i++) {
-                const { minIndex, steps } = this.findMin(unsortedArray);
-                totalSteps += steps;
-                sortedArray.push(unsortedArray.splice(minIndex, 1));
+        for (let i = minIndex + 1; i < array.length; i++) {
+            steps += 1;
+            if (array[i] < min) {
+                minIndex = i;
+                min = array[i];
             }
-
-            this.showResult(sortedArray, totalSteps);
         }
 
-        findMin(array) {
-            let steps = 0;
-            let minIndex = 0;
-            let min = array[minIndex];
+        return { minIndex, steps };
+    }
 
-            for (let i = minIndex + 1; i < array.length; i++) {
-                steps += 1;
-                if (array[i] < min) {
-                    minIndex = i;
-                    min = array[i];
-                }
-            }
-
-            return { minIndex, steps };
-        }
-
-        showResult(sortedArray, totalSteps) {
-            this.shadowRoot.querySelector(' .result').innerHTML = `Sorted array (${
-                sortedArray.length
-            } items): [${sortedArray.join(' ,')}].
+    showResult(sortedArray, totalSteps) {
+        this.shadowRoot.querySelector(' .result').innerHTML = `Sorted array (${
+            sortedArray.length
+        } items): [${sortedArray.join(' ,')}].
             <br>This algorithm took ${totalSteps} steps to find the result.
             <br>The real complexity is O(1/2 * n<sup>2</sup> - ${arrayLength}/2) due to the sequence of the number of items checked: n, n-1, n-2...2, 1. But constants in Big O notation are ignored.`;
 
-            this.shadowRoot.querySelector('.action-button.sort').setAttribute('disabled', true);
-        }
-
-        generateArray() {
-            unsortedArray = window.shuffleArray([...Array(arrayLength).keys()]);
-
-            this.shadowRoot.querySelector(
-                '.condition',
-            ).textContent = `Unsorted array (${arrayLength} items): [${unsortedArray.join(', ')}]`;
-
-            this.shadowRoot.querySelector('.action-button.sort').removeAttribute('disabled');
-            this.shadowRoot.querySelector('.result').innerHTML = '';
-        }
+        this.shadowRoot.querySelector('.action-button.sort').setAttribute('disabled', true);
     }
 
-    customElements.define('selection-sort-component', SelectionSortComponent);
-})();
+    generateArray() {
+        this._unsortedArray = window.shuffleArray([...Array(arrayLength).keys()]);
+
+        this.shadowRoot.querySelector(
+            '.condition',
+        ).textContent = `Unsorted array (${arrayLength} items): [${this._unsortedArray.join(', ')}]`;
+
+        this.shadowRoot.querySelector('.action-button.sort').removeAttribute('disabled');
+        this.shadowRoot.querySelector('.result').innerHTML = '';
+    }
+}
+
+customElements.define('selection-sort-component', SelectionSortComponent);

@@ -4,18 +4,20 @@
         <title>Grokking algorithms</title>
         <meta name="description" content="Grokking algorithms" />
         <meta name="author" content="https://github.com/ResidentTGT" />
+
         <link rel="stylesheet" href="src/styles/index.css" />
         <link rel="stylesheet" href="src/styles/algorithm.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet" />
-        <script type="text/javascript" src="src/scripts/util.js"></script>
+
         <script type="text/javascript" src="src/scripts/navigation.js"></script>
-        <script type="text/javascript" src="src/scripts/binarySearch.js"></script>
-        <script type="text/javascript" src="src/scripts/selectionSort.js"></script>
-        <script type="text/javascript" src="src/scripts/recursion.js"></script>
-        <script type="text/javascript" src="src/scripts/divideConquer.js"></script>
-        <script type="text/javascript" src="src/scripts/quicksort.js"></script>
-        <script type="text/javascript" src="src/scripts/dijkstra.js"></script>
+        <script type="module" src="src/scripts/util.js"></script>
+        <script type="module" src="src/scripts/binarySearch.js"></script>
+        <script type="module" src="src/scripts/selectionSort.js"></script>
+        <script type="module" src="src/scripts/recursion.js"></script>
+        <script type="module" src="src/scripts/divideConquer.js"></script>
+        <script type="module" src="src/scripts/quicksort.js"></script>
+        <script type="module" src="src/scripts/dijkstra.js"></script>
     </head>
 
     <body>
@@ -26,10 +28,8 @@
             <a href="#divideConquer">Divide-and-conquer algorithm</a>
             <a href="#quicksort">Quicksort</a>
             <a href="#dijkstra">Dijkstra's algorithm</a>
-            
         </aside>
         <main>
-            
             <div class="algorithm-layout">
                 <a name="binarySearch">Binary search algorithm</a>
                 <binary-search-component></binary-search-component>
@@ -39,7 +39,7 @@
                 <a name="selectionSort">Selection sort</a>
                 <selection-sort-component></selection-sort-component>
             </div>
-        
+
             <div class="algorithm-layout">
                 <a name="recursion">Recursion</a>
                 <recursion-component></recursion-component>
@@ -59,7 +59,6 @@
                 <a name="dijkstra">Dijkstra's algorithm</a>
                 <dijkstra-component></dijkstra-component>
             </div>
-
         </main>
     </body>
 </html>
