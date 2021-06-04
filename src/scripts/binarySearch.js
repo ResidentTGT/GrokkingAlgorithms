@@ -1,6 +1,6 @@
-const template = document.createElement('template');
+const binarySearchTemplate = document.createElement('template');
 
-template.innerHTML = `
+binarySearchTemplate.innerHTML = `
         <link rel="stylesheet" href="src/styles/algorithm.css" />
         <div class="description">
             In computer science, binary search, also known as half-interval search, logarithmic search, or
@@ -20,16 +20,16 @@ template.innerHTML = `
         <div class="result"></div>
     `;
 
-const array = [...Array(1000).keys()];
-const minValue = 0;
-const maxValue = 999;
-
 class BinarySearchComponent extends HTMLElement {
     constructor() {
         super();
 
+        this._array = [...Array(1000).keys()];
+        this._minValue = 0;
+        this._maxValue = 999;
+
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.appendChild(binarySearchTemplate.content.cloneNode(true));
 
         this.searchButtonHandler = this.searchButtonHandler.bind(this);
     }
@@ -55,7 +55,7 @@ class BinarySearchComponent extends HTMLElement {
             this.showError(false);
         }
 
-        const steps = this.binarySearch(array, searchValue);
+        const steps = this.binarySearch(this._array, searchValue);
 
         this.showResult(steps);
     }
@@ -90,7 +90,13 @@ class BinarySearchComponent extends HTMLElement {
     isValidInput(input) {
         const value = +input;
 
-        return !(!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue);
+        return !(
+            !input ||
+            isNaN(value) ||
+            !Number.isInteger(value) ||
+            value < this._minValue ||
+            value > this._maxValue
+        );
     }
 
     showError(show = true) {

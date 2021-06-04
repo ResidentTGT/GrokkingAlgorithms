@@ -1,6 +1,6 @@
-const template = document.createElement('template');
+const dijkstraTemplate = document.createElement('template');
 
-template.innerHTML = `
+dijkstraTemplate.innerHTML = `
     <style> 
     
     </style>
@@ -18,12 +18,37 @@ template.innerHTML = `
     <div class="result"></div>
     `;
 
+class Node {
+    constructor(name, neighbors) {
+        this.name = name;
+        this.neighbors = neighbors;
+    }
+}
+
 class DijkstraComponent extends HTMLElement {
     constructor() {
         super();
 
+        this._from = 1;
+        this._to = 10;
+
+        this._nodes = [
+            new Node('start', ['a', 'b']),
+            new Node('a', ['b', 'c']),
+            new Node('b', ['c', 'd']),
+            new Node('c', ['d', 'e', 'f']),
+            new Node('d', ['f']),
+            new Node('e', ['end']),
+            new Node('f', ['e', 'end']),
+            new Node('end'),
+        ];
+
+        this._graph = new Map();
+        this._costs = new Map();
+        this._parents = new Map();
+
         this._shadowRoot = this.attachShadow({ mode: 'open' });
-        this._shadowRoot.appendChild(template.content.cloneNode(true));
+        this._shadowRoot.appendChild(dijkstraTemplate.content.cloneNode(true));
 
         this.$generateButton = this.shadowRoot.querySelector('.action-button.generate');
         this.$findButton = this.shadowRoot.querySelector('.action-button.find');
@@ -32,8 +57,8 @@ class DijkstraComponent extends HTMLElement {
     }
 
     connectedCallback() {
-        this._generateButton.addEventListener('click', this.generateGraphClickHandler);
-        this._findButton.addEventListener('click', this.dijkstraClickHandler);
+        this.$generateButton.addEventListener('click', () => this.generateGraphClickHandler());
+        this.$findButton.addEventListener('click', () => this.dijkstraClickHandler());
     }
 
     disconnectedCallback() {
@@ -43,7 +68,31 @@ class DijkstraComponent extends HTMLElement {
 
     dijkstraClickHandler() {}
 
-    generateGraphClickHandler() {}
+    generateGraphClickHandler() {
+        this.fillGraph();
+    }
+
+    fillGraph() {
+        this._nodes.forEach(n => {
+            const neighbors = new Map();
+            if (n.neighbors) {
+                n.neighbors.forEach(nr => neighbors.set(nr, window.generateRandomInteger(this._from, this._to)));
+            }
+            this._graph.set(n, neighbors);
+        });
+
+        const startNode = this._nodes.find(n => n.name === 'start');
+        this._nodes
+            .filter(n => n !== startNode)
+            .forEach(n => {
+                const child = startNode.neighbors.find(c => c === n.name);
+                if (child) {
+                    this._costs.set(n, this._graph.get(startNode).get(child));
+                } else {
+                    this._costs.set(n, Infinity);
+                }
+            });
+    }
 }
 
 customElements.define('dijkstra-component', DijkstraComponent);

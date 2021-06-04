@@ -1,6 +1,6 @@
-const template = document.createElement('template');
+const divideConquerTemplate = document.createElement('template');
 
-template.innerHTML = `
+divideConquerTemplate.innerHTML = `
         <link rel="stylesheet" href="src/styles/algorithm.css" />
         
         <style>
@@ -40,16 +40,16 @@ template.innerHTML = `
         <div class="graph"></div>
     `;
 
-const minValue = 1;
-const maxValue = 50;
-const squareWrapperSize = 300;
-
 class DivideConquerComponent extends HTMLElement {
     constructor() {
         super();
 
+        this._minValue = 1;
+        this._maxValue = 50;
+        this._squareWrapperSize = 300;
+
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.appendChild(divideConquerTemplate.content.cloneNode(true));
 
         this.divideConquer = this.divideConquer.bind(this);
     }
@@ -95,7 +95,13 @@ class DivideConquerComponent extends HTMLElement {
     isValidInput(input) {
         const value = +input;
 
-        return !(!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue);
+        return !(
+            !input ||
+            isNaN(value) ||
+            !Number.isInteger(value) ||
+            value < this._minValue ||
+            value > this._maxValue
+        );
     }
 
     showError(show = true) {
@@ -119,11 +125,11 @@ class DivideConquerComponent extends HTMLElement {
 
             graphElem.style.display = 'flex';
             graphElem.innerHTML = '';
-            graphElem.style.width = `${(width / max) * squareWrapperSize}px`;
-            graphElem.style.height = `${(height / max) * squareWrapperSize}px`;
+            graphElem.style.width = `${(width / max) * this._squareWrapperSize}px`;
+            graphElem.style.height = `${(height / max) * this._squareWrapperSize}px`;
 
             const squaresCount = ((width / result) * height) / result;
-            const squareSizePx = (result / max) * squareWrapperSize;
+            const squareSizePx = (result / max) * this._squareWrapperSize;
 
             for (let i = 0; i < squaresCount; i++) {
                 const square = document.createElement('div');

@@ -1,6 +1,6 @@
-const template = document.createElement('template');
+const selectionSortTemplate = document.createElement('template');
 
-template.innerHTML = `
+selectionSortTemplate.innerHTML = `
     <link rel="stylesheet" href="src/styles/algorithm.css" />
     <div class="description">
         In computer science, selection sort is an in-place comparison sorting algorithm. It has an O(n2)
@@ -23,16 +23,15 @@ template.innerHTML = `
     <div class="result"></div>
     `;
 
-const arrayLength = 30;
-
 class SelectionSortComponent extends HTMLElement {
     constructor() {
         super();
 
+        this._arrayLength = 30;
         this._unsortedArray = [];
 
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.appendChild(selectionSortTemplate.content.cloneNode(true));
 
         this.generateArray = this.generateArray.bind(this);
         this.sort = this.sort.bind(this);
@@ -52,7 +51,7 @@ class SelectionSortComponent extends HTMLElement {
         const sortedArray = [];
         let totalSteps = 0;
 
-        for (let i = 0; i < arrayLength; i++) {
+        for (let i = 0; i < this._arrayLength; i++) {
             const { minIndex, steps } = this.findMin(this._unsortedArray);
             totalSteps += steps;
             sortedArray.push(this._unsortedArray.splice(minIndex, 1));
@@ -82,17 +81,18 @@ class SelectionSortComponent extends HTMLElement {
             sortedArray.length
         } items): [${sortedArray.join(' ,')}].
             <br>This algorithm took ${totalSteps} steps to find the result.
-            <br>The real complexity is O(1/2 * n<sup>2</sup> - ${arrayLength}/2) due to the sequence of the number of items checked: n, n-1, n-2...2, 1. But constants in Big O notation are ignored.`;
+            <br>The real complexity is O(1/2 * n<sup>2</sup> - ${this._arrayLength}/2) 
+            due to the sequence of the number of items checked: n, n-1, n-2...2, 1. But constants in Big O notation are ignored.`;
 
         this.shadowRoot.querySelector('.action-button.sort').setAttribute('disabled', true);
     }
 
     generateArray() {
-        this._unsortedArray = window.shuffleArray([...Array(arrayLength).keys()]);
+        this._unsortedArray = window.shuffleArray([...Array(this._arrayLength).keys()]);
 
-        this.shadowRoot.querySelector(
-            '.condition',
-        ).textContent = `Unsorted array (${arrayLength} items): [${this._unsortedArray.join(', ')}]`;
+        this.shadowRoot.querySelector('.condition').textContent = `Unsorted array (${
+            this._arrayLength
+        } items): [${this._unsortedArray.join(', ')}]`;
 
         this.shadowRoot.querySelector('.action-button.sort').removeAttribute('disabled');
         this.shadowRoot.querySelector('.result').innerHTML = '';

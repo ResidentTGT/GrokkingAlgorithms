@@ -1,6 +1,6 @@
-const template = document.createElement('template');
+const recursionTemplate = document.createElement('template');
 
-template.innerHTML = `
+recursionTemplate.innerHTML = `
     <link rel="stylesheet" href="src/styles/algorithm.css" />
     <div class="description">
         Recursion occurs when a thing is defined in terms of itself or of its type. The most common
@@ -23,15 +23,15 @@ template.innerHTML = `
     <div class="result"></div>
     `;
 
-const minValue = 1;
-const maxValue = 10;
-
 class RecursionComponent extends HTMLElement {
     constructor() {
         super();
 
+        this._minValue = 1;
+        this._maxValue = 10;
+
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.appendChild(recursionTemplate.content.cloneNode(true));
 
         this.recursionClickHandler = this.recursionClickHandler.bind(this);
     }
@@ -67,7 +67,7 @@ class RecursionComponent extends HTMLElement {
     isValidInput(input) {
         const value = +input;
 
-        if (!input || isNaN(value) || !Number.isInteger(value) || value < minValue || value > maxValue) {
+        if (!input || isNaN(value) || !Number.isInteger(value) || value < this._minValue || value > this._maxValue) {
             this.showError();
             this.showResult();
             return false;

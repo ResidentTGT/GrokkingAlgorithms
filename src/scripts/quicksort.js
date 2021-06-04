@@ -1,6 +1,6 @@
-const template = document.createElement('template');
+const quicksortTemplate = document.createElement('template');
 
-template.innerHTML = `
+quicksortTemplate.innerHTML = `
     <link rel="stylesheet" href="src/styles/algorithm.css" />
     <div class="description">
     Quicksort is an in-place sorting algorithm. When implemented well, it can be somewhat faster than merge sort and about two or three times faster than heapsort.<br>
@@ -16,17 +16,16 @@ template.innerHTML = `
     <div class="result"></div>
     `;
 
-const arrayLength = 30;
-
 class QuicksortComponent extends HTMLElement {
     constructor() {
         super();
 
+        this._arrayLength = 30;
         this._unsortedArray = [];
         this._totalSteps = 0;
 
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.appendChild(quicksortTemplate.content.cloneNode(true));
 
         this.generateArrayClickHandler = this.generateArrayClickHandler.bind(this);
         this.quicksortClickHandler = this.quicksortClickHandler.bind(this);
@@ -86,11 +85,11 @@ class QuicksortComponent extends HTMLElement {
     }
 
     generateArrayClickHandler() {
-        this._unsortedArray = window.shuffleArray([...Array(arrayLength).keys()]);
+        this._unsortedArray = window.shuffleArray([...Array(this._arrayLength).keys()]);
 
-        this.shadowRoot.querySelector(
-            '.condition',
-        ).textContent = `Unsorted array (${arrayLength} items): [${this._unsortedArray.join(', ')}]`;
+        this.shadowRoot.querySelector('.condition').textContent = `Unsorted array (${
+            this._arrayLength
+        } items): [${this._unsortedArray.join(', ')}]`;
 
         this.shadowRoot.querySelector('.action-button.sort').removeAttribute('disabled');
         this.shadowRoot.querySelector('.result').innerHTML = '';
