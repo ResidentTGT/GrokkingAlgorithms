@@ -8,7 +8,7 @@ dijkstraTemplate.innerHTML = `
         margin-top: 20px;
         overflow:visible;
     }
-    .circle{
+    .color{
         fill:white;
     }
     .line{
@@ -48,21 +48,8 @@ class DijkstraComponent extends HTMLElement {
     constructor() {
         super();
 
-        const interval = 60;
-        this._nodes = [
-            new Node('start', ['a', 'b'], new Position(0, interval)),
-            new Node('a', ['b', 'c'], new Position(interval, 0)),
-            new Node('b', ['c', 'd'], new Position(interval, 2 * interval)),
-            new Node('c', ['d', 'e', 'f'], new Position(2 * interval, 0)),
-            new Node('d', ['f'], new Position(2 * interval, 2 * interval)),
-            new Node('e', ['end'], new Position(3 * interval, 0)),
-            new Node('f', ['e', 'end'], new Position(3 * interval, 2 * interval)),
-            new Node('end', null, new Position(4 * interval, interval)),
-        ];
-
-        this._graph = new Map();
-        this._costs = new Map();
-        this._parents = new Map();
+        this.initNodes();
+        this.initGraph();
 
         this._shadowRoot = this.attachShadow({ mode: 'open' });
         this._shadowRoot.appendChild(dijkstraTemplate.content.cloneNode(true));
@@ -83,11 +70,34 @@ class DijkstraComponent extends HTMLElement {
         this.shadowRoot.querySelector('.action-button.find').removeEventListener();
     }
 
-    dijkstraClickHandler() {}
+    dijkstraClickHandler() {
+        
+    }
 
     generateGraphClickHandler() {
+        this.initGraph();
         this.fillGraph();
         this.drawGraph();
+    }
+
+    initNodes() {
+        const interval = 60;
+        this._nodes = [
+            new Node('start', ['a', 'b'], new Position(0, interval)),
+            new Node('a', ['b', 'c'], new Position(interval, 0)),
+            new Node('b', ['c', 'd'], new Position(interval, 2 * interval)),
+            new Node('c', ['d', 'e', 'f'], new Position(2 * interval, 0)),
+            new Node('d', ['f'], new Position(2 * interval, 2 * interval)),
+            new Node('e', ['end'], new Position(3 * interval, 0)),
+            new Node('f', ['e', 'end'], new Position(3 * interval, 2 * interval)),
+            new Node('end', null, new Position(4 * interval, interval)),
+        ];
+    }
+
+    initGraph() {
+        this._graph = new Map();
+        this._costs = new Map();
+        this._parents = new Map();
     }
 
     fillGraph() {
@@ -113,6 +123,33 @@ class DijkstraComponent extends HTMLElement {
     }
 
     drawGraph() {
+        this.$graph.innerHTML = '';
+        this.drawMarker();
+
+        this._nodes.forEach(node => {
+            const neighbors = node.neighbors
+                ? this._nodes.filter(n => node.neighbors.some(neighbor => neighbor === n.name))
+                : [];
+
+            const nodeCosts = this._graph.get(node);
+
+            neighbors.forEach(neighbor => {
+                this.drawLine(node, neighbor);
+
+                const cost = nodeCosts.get(neighbor.name);
+                this.drawCost(node, neighbor, cost);
+            });
+        });
+
+        this._nodes.forEach(n => {
+            this.drawCircle(n);
+            this.drawNodeName(n);
+        });
+
+        this.$graph.style.display = 'block';
+    }
+
+    drawMarker() {
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', 'M 0 0 L 15 5 L 0 10 z');
         path.style.fill = 'gray';
@@ -130,48 +167,44 @@ class DijkstraComponent extends HTMLElement {
         marker.appendChild(path);
         defs.appendChild(marker);
         this.$graph.appendChild(defs);
+    }
 
-        this._nodes.forEach(n => {
-            const neighbors = this._nodes.filter(node => n.neighbors && n.neighbors.some(nr => nr === node.name));
+    drawLine(point1, point2) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', point1.position.x);
+        line.setAttribute('y1', point1.position.y);
+        line.setAttribute('x2', point2.position.x);
+        line.setAttribute('y2', point2.position.y);
+        line.setAttribute('marker-end', 'url(#arrow)');
+        line.classList.add('line');
+        this.$graph.appendChild(line);
+    }
 
-            const costs = this._graph.get(n);
+    drawCost(point1, point2, cost) {
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', (point1.position.x + point2.position.x) / 2 - 5);
+        text.setAttribute('y', (point1.position.y + point2.position.y) / 2 + 8);
+        text.classList.add('color');
+        text.textContent = cost;
+        this.$graph.appendChild(text);
+    }
 
-            neighbors.forEach(nr => {
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', n.position.x);
-                line.setAttribute('y1', n.position.y);
-                line.setAttribute('x2', nr.position.x);
-                line.setAttribute('y2', nr.position.y);
-                line.setAttribute('marker-end', 'url(#arrow)');
-                line.classList.add('line');
-                this.$graph.appendChild(line);
+    drawCircle(node) {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', node.position.x);
+        circle.setAttribute('cy', node.position.y);
+        circle.setAttribute('r', 4);
+        circle.classList.add('color');
+        this.$graph.appendChild(circle);
+    }
 
-                const cost = costs.get(nr.name);
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', (n.position.x + nr.position.x) / 2 - 5);
-                text.setAttribute('y', (n.position.y + nr.position.y) / 2 + 8);
-                text.setAttribute('fill', 'white');
-                text.textContent = cost;
-                this.$graph.appendChild(text);
-            });
-        });
-        this._nodes.forEach(n => {
-            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circle.setAttribute('cx', n.position.x);
-            circle.setAttribute('cy', n.position.y);
-            circle.setAttribute('r', 4);
-            circle.classList.add('circle');
-            this.$graph.appendChild(circle);
-
-            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            text.setAttribute('x', n.position.x);
-            text.setAttribute('y', n.position.y + 18);
-            text.setAttribute('fill', 'white');
-            text.textContent = n.name;
-            this.$graph.appendChild(text);
-        });
-
-        this.$graph.style.display = 'block';
+    drawNodeName(node) {
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', node.position.x );
+        text.setAttribute('y', node.position.y + 18);
+        text.classList.add('color');
+        text.textContent = node.name;
+        this.$graph.appendChild(text);
     }
 }
 
