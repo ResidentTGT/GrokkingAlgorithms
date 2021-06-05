@@ -71,13 +71,46 @@ class DijkstraComponent extends HTMLElement {
     }
 
     dijkstraClickHandler() {
-        
+        const processed = [];
+        let node = this.findLowestCostNode(this._costs, processed);
+        while (node) {
+            const cost = this._costs.get(node);
+            const neighbors = this._graph.get(node);
+
+            for (const [neighborNodeName, neighborCost] of neighbors) {
+                const neighborNode = this._nodes.find(n => n.name === neighborNodeName);
+                const newCost = cost + neighborCost;
+                if (this._costs.get(neighborNode) > newCost) {
+                    this._costs.set(neighborNode, newCost);
+                    this._parents.set(neighborNode, node);
+                }
+            }
+            processed.push(node);
+            node = this.findLowestCostNode(this._costs, processed);
+        }
+
+        console.dir(this._costs);
+        console.dir(this._parents);
+    }
+
+    findLowestCostNode(costs, processed) {
+        let lowestCost = Infinity;
+        let lowestCostNode;
+
+        for (const [node, cost] of costs) {
+            if (cost < lowestCost && !processed.some(p => p === node)) {
+                lowestCost = cost;
+                lowestCostNode = node;
+            }
+        }
+        return lowestCostNode;
     }
 
     generateGraphClickHandler() {
         this.initGraph();
         this.fillGraph();
         this.drawGraph();
+        this.$findButton.removeAttribute('disabled');
     }
 
     initNodes() {
@@ -200,7 +233,7 @@ class DijkstraComponent extends HTMLElement {
 
     drawNodeName(node) {
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', node.position.x );
+        text.setAttribute('x', node.position.x);
         text.setAttribute('y', node.position.y + 18);
         text.classList.add('color');
         text.textContent = node.name;
