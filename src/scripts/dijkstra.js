@@ -15,6 +15,9 @@ dijkstraTemplate.innerHTML = `
         stroke-width:1px;
         stroke:gray;
     }
+    .bold-line{
+        stroke:#fbc02d;
+    }
     </style>
     <div class="description">
     Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a graph, which may represent, for example, road networks. <br>
@@ -72,13 +75,14 @@ class DijkstraComponent extends HTMLElement {
 
     dijkstraClickHandler() {
         const processed = [];
+
         let node = this.findLowestCostNode(this._costs, processed);
+
         while (node) {
             const cost = this._costs.get(node);
             const neighbors = this._graph.get(node);
 
-            for (const [neighborNodeName, neighborCost] of neighbors) {
-                const neighborNode = this._nodes.find(n => n.name === neighborNodeName);
+            for (const [neighborNode, neighborCost] of neighbors) {
                 const newCost = cost + neighborCost;
                 if (this._costs.get(neighborNode) > newCost) {
                     this._costs.set(neighborNode, newCost);
@@ -89,8 +93,7 @@ class DijkstraComponent extends HTMLElement {
             node = this.findLowestCostNode(this._costs, processed);
         }
 
-        console.dir(this._costs);
-        console.dir(this._parents);
+        this.drawResult();
     }
 
     findLowestCostNode(costs, processed) {
@@ -107,6 +110,7 @@ class DijkstraComponent extends HTMLElement {
     }
 
     generateGraphClickHandler() {
+        this.$result.textContent = '';
         this.initGraph();
         this.fillGraph();
         this.drawGraph();
@@ -139,7 +143,7 @@ class DijkstraComponent extends HTMLElement {
             if (n.neighbors) {
                 n.neighbors.forEach(nr => neighbors.set(nr, window.generateRandomInteger(1, 9)));
             }
-            this._graph.set(n, neighbors);
+            this._graph.set(n.name, neighbors);
         });
 
         const startNode = this._nodes.find(n => n.name === 'start');
@@ -148,9 +152,10 @@ class DijkstraComponent extends HTMLElement {
             .forEach(n => {
                 const child = startNode.neighbors.find(c => c === n.name);
                 if (child) {
-                    this._costs.set(n, this._graph.get(startNode).get(child));
+                    this._costs.set(n.name, this._graph.get(startNode.name).get(child));
+                    this._parents.set(child, startNode.name);
                 } else {
-                    this._costs.set(n, Infinity);
+                    this._costs.set(n.name, Infinity);
                 }
             });
     }
@@ -164,7 +169,7 @@ class DijkstraComponent extends HTMLElement {
                 ? this._nodes.filter(n => node.neighbors.some(neighbor => neighbor === n.name))
                 : [];
 
-            const nodeCosts = this._graph.get(node);
+            const nodeCosts = this._graph.get(node.name);
 
             neighbors.forEach(neighbor => {
                 this.drawLine(node, neighbor);
@@ -180,6 +185,27 @@ class DijkstraComponent extends HTMLElement {
         });
 
         this.$graph.style.display = 'block';
+    }
+
+    drawResult() {
+        this.getPath('end')
+            .map(point => this._nodes.find(n => n.name === point))
+            .reduce((a, b) => {
+                this.drawLine(a, b, true);
+                return b;
+            });
+
+        this.$result.textContent = `Minimum path cost is ${this._costs.get('end')}`;
+    }
+
+    getPath(node, path = []) {
+        path.push(node);
+
+        if (node === 'start') {
+            return path;
+        } else {
+            return this.getPath(this._parents.get(node), path);
+        }
     }
 
     drawMarker() {
@@ -202,14 +228,19 @@ class DijkstraComponent extends HTMLElement {
         this.$graph.appendChild(defs);
     }
 
-    drawLine(point1, point2) {
+    drawLine(point1, point2, result = false) {
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1', point1.position.x);
         line.setAttribute('y1', point1.position.y);
         line.setAttribute('x2', point2.position.x);
         line.setAttribute('y2', point2.position.y);
-        line.setAttribute('marker-end', 'url(#arrow)');
-        line.classList.add('line');
+
+        if (result) {
+            line.classList.add('bold-line');
+        } else {
+            line.setAttribute('marker-end', 'url(#arrow)');
+            line.classList.add('line');
+        }
         this.$graph.appendChild(line);
     }
 
