@@ -30,21 +30,23 @@ class SelectionSortComponent extends HTMLElement {
         this._arrayLength = 30;
         this._unsortedArray = [];
 
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(selectionSortTemplate.content.cloneNode(true));
+        this._shadowRoot = this.attachShadow({ mode: 'open' });
+        this._shadowRoot.appendChild(selectionSortTemplate.content.cloneNode(true));
 
-        this.generateArray = this.generateArray.bind(this);
-        this.sort = this.sort.bind(this);
+        this.$generateButton = this.shadowRoot.querySelector('.action-button.generate');
+        this.$sortButton = this.shadowRoot.querySelector('.action-button.sort');
+        this.$result = this.shadowRoot.querySelector('.result');
+        this.$condition = this.shadowRoot.querySelector('.condition');
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.action-button.generate').addEventListener('click', this.generateArray);
-        this.shadowRoot.querySelector('.action-button.sort').addEventListener('click', this.sort);
+        this.$generateButton.addEventListener('click', () => this.generateArray());
+        this.$sortButton.addEventListener('click', () => this.sort());
     }
 
     disconnectedCallback() {
-        this.shadowRoot.querySelector('.action-button.generate').removeEventListener();
-        this.shadowRoot.querySelector('.action-button.sort').removeEventListener();
+        this.$generateButton.removeEventListener();
+        this.$sortButton.removeEventListener();
     }
 
     sort() {
@@ -77,25 +79,23 @@ class SelectionSortComponent extends HTMLElement {
     }
 
     showResult(sortedArray, totalSteps) {
-        this.shadowRoot.querySelector(' .result').innerHTML = `Sorted array (${
-            sortedArray.length
-        } items): [${sortedArray.join(' ,')}].
+        this.$result.innerHTML = `Sorted array (${sortedArray.length} items): [${sortedArray.join(', ')}].
             <br>This algorithm took ${totalSteps} steps to find the result.
             <br>The real complexity is O(1/2 * n<sup>2</sup> - ${this._arrayLength}/2) 
             due to the sequence of the number of items checked: n, n-1, n-2...2, 1. But constants in Big O notation are ignored.`;
 
-        this.shadowRoot.querySelector('.action-button.sort').setAttribute('disabled', true);
+        this.$sortButton.setAttribute('disabled', true);
     }
 
     generateArray() {
         this._unsortedArray = window.shuffleArray([...Array(this._arrayLength).keys()]);
 
-        this.shadowRoot.querySelector('.condition').textContent = `Unsorted array (${
-            this._arrayLength
-        } items): [${this._unsortedArray.join(', ')}]`;
+        this.$condition.textContent = `Unsorted array (${this._arrayLength} items): [${this._unsortedArray.join(
+            ', ',
+        )}]`;
 
-        this.shadowRoot.querySelector('.action-button.sort').removeAttribute('disabled');
-        this.shadowRoot.querySelector('.result').innerHTML = '';
+        this.$sortButton.removeAttribute('disabled');
+        this.$result.innerHTML = '';
     }
 }
 

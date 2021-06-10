@@ -30,22 +30,25 @@ class RecursionComponent extends HTMLElement {
         this._minValue = 1;
         this._maxValue = 10;
 
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(recursionTemplate.content.cloneNode(true));
+        this._shadowRoot = this.attachShadow({ mode: 'open' });
+        this._shadowRoot.appendChild(recursionTemplate.content.cloneNode(true));
 
-        this.recursionClickHandler = this.recursionClickHandler.bind(this);
+        this.$recursionButton = this.shadowRoot.querySelector('.action-button');
+        this.$input = this.shadowRoot.querySelector('.item-input');
+        this.$error = this.shadowRoot.querySelector('.error');
+        this.$result = this.shadowRoot.querySelector('.result');
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.action-button').addEventListener('click', this.recursionClickHandler);
+        this.$recursionButton.addEventListener('click', () => this.recursionClickHandler());
     }
 
     disconnectedCallback() {
-        this.shadowRoot.querySelector('.action-button').removeEventListener();
+        this.$recursionButton.removeEventListener();
     }
 
     recursionClickHandler() {
-        const input = this.shadowRoot.querySelector('.item-input')?.value;
+        const input = this.$input?.value;
 
         if (!this.isValidInput(input)) {
             return;
@@ -78,23 +81,11 @@ class RecursionComponent extends HTMLElement {
     }
 
     showError(show = true) {
-        const errorElem = this.shadowRoot.querySelector('.error');
-
-        if (show) {
-            errorElem.classList.add('show');
-        } else {
-            errorElem.classList.remove('show');
-        }
+        show ? this.$error.classList.add('show') : this.$error.classList.remove('show');
     }
 
     showResult(input, result) {
-        const resultElem = this.shadowRoot.querySelector('.result');
-
-        if (result) {
-            resultElem.textContent = `The factorial of ${input} is ${result}.`;
-        } else {
-            resultElem.textContent = '';
-        }
+        this.$result.textContent = result ? `The factorial of ${input} is ${result}.` : '';
     }
 }
 

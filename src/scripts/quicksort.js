@@ -24,23 +24,23 @@ class QuicksortComponent extends HTMLElement {
         this._unsortedArray = [];
         this._totalSteps = 0;
 
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(quicksortTemplate.content.cloneNode(true));
+        this._shadowRoot = this.attachShadow({ mode: 'open' });
+        this._shadowRoot.appendChild(quicksortTemplate.content.cloneNode(true));
 
-        this.generateArrayClickHandler = this.generateArrayClickHandler.bind(this);
-        this.quicksortClickHandler = this.quicksortClickHandler.bind(this);
+        this.$generateButton = this.shadowRoot.querySelector('.action-button.generate');
+        this.$sortButton = this.shadowRoot.querySelector('.action-button.sort');
+        this.$result = this.shadowRoot.querySelector('.result');
+        this.$condition = this.shadowRoot.querySelector('.condition');
     }
 
     connectedCallback() {
-        this.shadowRoot
-            .querySelector('.action-button.generate')
-            .addEventListener('click', this.generateArrayClickHandler);
-        this.shadowRoot.querySelector('.action-button.sort').addEventListener('click', this.quicksortClickHandler);
+        this.$generateButton.addEventListener('click', () => this.generateArrayClickHandler());
+        this.$sortButton.addEventListener('click', () => this.quicksortClickHandler());
     }
 
     disconnectedCallback() {
-        this.shadowRoot.querySelector('.action-button.generate').removeEventListener();
-        this.shadowRoot.querySelector('.action-button.sort').removeEventListener();
+        this.$generateButton.removeEventListener();
+        this.$sortButton.removeEventListener();
     }
 
     quicksortClickHandler() {
@@ -75,24 +75,22 @@ class QuicksortComponent extends HTMLElement {
     }
 
     showResult(sortedArray, totalSteps) {
-        this.shadowRoot.querySelector(' .result').innerHTML = `Sorted array (${
-            sortedArray.length
-        } items): [${sortedArray.join(' ,')}].
+        this.$result.innerHTML = `Sorted array (${sortedArray.length} items): [${sortedArray.join(', ')}].
             <br>This algorithm took ${totalSteps} steps to sort the array.
             <br>This is close to the theoretical complexity of the algorithm O(n * log(n)) = 30 * log(30) &#8776; 147`;
 
-        this.shadowRoot.querySelector('.action-button.sort').setAttribute('disabled', true);
+        this.$sortButton.setAttribute('disabled', true);
     }
 
     generateArrayClickHandler() {
         this._unsortedArray = window.shuffleArray([...Array(this._arrayLength).keys()]);
 
-        this.shadowRoot.querySelector('.condition').textContent = `Unsorted array (${
-            this._arrayLength
-        } items): [${this._unsortedArray.join(', ')}]`;
+        this.$condition.textContent = `Unsorted array (${this._arrayLength} items): [${this._unsortedArray.join(
+            ', ',
+        )}]`;
 
-        this.shadowRoot.querySelector('.action-button.sort').removeAttribute('disabled');
-        this.shadowRoot.querySelector('.result').innerHTML = '';
+        this.$sortButton.removeAttribute('disabled');
+        this.$result.innerHTML = '';
     }
 }
 

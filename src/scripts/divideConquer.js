@@ -48,24 +48,26 @@ class DivideConquerComponent extends HTMLElement {
         this._maxValue = 50;
         this._squareWrapperSize = 300;
 
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(divideConquerTemplate.content.cloneNode(true));
+        this._shadowRoot = this.attachShadow({ mode: 'open' });
+        this._shadowRoot.appendChild(divideConquerTemplate.content.cloneNode(true));
 
-        this.divideConquer = this.divideConquer.bind(this);
+        this.$divideConquerButton = this.shadowRoot.querySelector('.action-button');
+        this.$inputs = this.shadowRoot.querySelectorAll('.item-input');
+        this.$error = this.shadowRoot.querySelector('.error');
+        this.$result = this.shadowRoot.querySelector('.result');
+        this.$graph = this.shadowRoot.querySelector('.graph');
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.action-button').addEventListener('click', this.divideConquer);
+        this.$divideConquerButton.addEventListener('click', () => this.divideConquer());
     }
 
     disconnectedCallback() {
-        this.shadowRoot.querySelector('.action-button').removeEventListener();
+        this.$divideConquerButton.removeEventListener();
     }
 
     divideConquer() {
-        const inputs = this.shadowRoot.querySelectorAll('.item-input');
-
-        if (inputs.length !== 2 || Array.from(inputs).some(i => !this.isValidInput(i.value))) {
+        if (this.$inputs.length !== 2 || Array.from(this.$inputs).some(i => !this.isValidInput(i.value))) {
             this.showError();
             this.showResult();
             return;
@@ -73,7 +75,7 @@ class DivideConquerComponent extends HTMLElement {
             this.showError(false);
         }
 
-        const [width, height] = [+inputs[0].value, +inputs[1].value];
+        const [width, height] = [+this.$inputs[0].value, +this.$inputs[1].value];
 
         const maxSquareSize = this.getMaxSizeRecursion(width, height);
 
@@ -105,28 +107,19 @@ class DivideConquerComponent extends HTMLElement {
     }
 
     showError(show = true) {
-        const errorElem = this.shadowRoot.querySelector('.error');
-
-        if (show) {
-            errorElem.classList.add('show');
-        } else {
-            errorElem.classList.remove('show');
-        }
+        show ? this.$error.classList.add('show') : this.$error.classList.remove('show');
     }
 
     showResult(result, width, height) {
-        const resultElem = this.shadowRoot.querySelector('.result');
-        const graphElem = this.shadowRoot.querySelector('.graph');
-
         if (result) {
             const max = Math.max(width, height);
 
-            resultElem.textContent = `Width: ${width}, height: ${height}, max square size: ${result}.`;
+            this.$result.textContent = `Width: ${width}, height: ${height}, max square size: ${result}.`;
 
-            graphElem.style.display = 'flex';
-            graphElem.innerHTML = '';
-            graphElem.style.width = `${(width / max) * this._squareWrapperSize}px`;
-            graphElem.style.height = `${(height / max) * this._squareWrapperSize}px`;
+            this.$graph.style.display = 'flex';
+            this.$graph.innerHTML = '';
+            this.$graph.style.width = `${(width / max) * this._squareWrapperSize}px`;
+            this.$graph.style.height = `${(height / max) * this._squareWrapperSize}px`;
 
             const squaresCount = ((width / result) * height) / result;
             const squareSizePx = (result / max) * this._squareWrapperSize;
@@ -135,11 +128,11 @@ class DivideConquerComponent extends HTMLElement {
                 const square = document.createElement('div');
                 square.style.width = square.style.height = `${squareSizePx}px`;
                 square.classList.add('square');
-                graphElem.appendChild(square);
+                this.$graph.appendChild(square);
             }
         } else {
-            resultElem.textContent = '';
-            graphElem.style.display = 'none';
+            this.$result.textContent = '';
+            this.$graph.style.display = 'none';
         }
     }
 }

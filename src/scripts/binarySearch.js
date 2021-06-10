@@ -28,22 +28,25 @@ class BinarySearchComponent extends HTMLElement {
         this._minValue = 0;
         this._maxValue = 999;
 
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(binarySearchTemplate.content.cloneNode(true));
+        this._shadowRoot = this.attachShadow({ mode: 'open' });
+        this._shadowRoot.appendChild(binarySearchTemplate.content.cloneNode(true));
 
-        this.searchButtonHandler = this.searchButtonHandler.bind(this);
+        this.$searchButton = this.shadowRoot.querySelector('.action-button');
+        this.$input = this.shadowRoot.querySelector('.item-input');
+        this.$error = this.shadowRoot.querySelector('.error');
+        this.$result = this.shadowRoot.querySelector('.result');
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.action-button').addEventListener('click', this.searchButtonHandler);
+        this.$searchButton.addEventListener('click', () => this.searchButtonHandler());
     }
 
     disconnectedCallback() {
-        this.shadowRoot.querySelector('.action-button').removeEventListener();
+        this.$searchButton.removeEventListener();
     }
 
     searchButtonHandler() {
-        const input = this.shadowRoot.querySelector('.item-input')?.value;
+        const input = this.$input.value;
 
         const searchValue = +input;
 
@@ -100,23 +103,11 @@ class BinarySearchComponent extends HTMLElement {
     }
 
     showError(show = true) {
-        const errorElem = this.shadowRoot.querySelector('.error');
-
-        if (show) {
-            errorElem.classList.add('show');
-        } else {
-            errorElem.classList.remove('show');
-        }
+        show ? this.$error.classList.add('show') : this.$error.classList.remove('show');
     }
 
     showResult(result) {
-        const resultElem = this.shadowRoot.querySelector('.result');
-
-        if (result) {
-            resultElem.textContent = `This algorithm took ${result} steps to find the result.`;
-        } else {
-            resultElem.textContent = '';
-        }
+        this.$result.textContent = result ? `This algorithm took ${result} steps to find the result.` : '';
     }
 }
 
