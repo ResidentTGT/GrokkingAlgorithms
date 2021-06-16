@@ -1,7 +1,7 @@
 const greedyTemplate = document.createElement('template');
 
 greedyTemplate.innerHTML = `
-    <link rel="stylesheet" href="src/styles/algorithm.css" />
+    <link rel="stylesheet" href="assets/css/algorithm.css" />
     <style> 
     </style>
     <div class="description">

@@ -1,7 +1,7 @@
 const binarySearchTemplate = document.createElement('template');
 
 binarySearchTemplate.innerHTML = `
-        <link rel="stylesheet" href="src/styles/algorithm.css" />
+        <link rel="stylesheet" href="assets/css/algorithm.css" />
         <div class="description">
             In computer science, binary search, also known as half-interval search, logarithmic search, or
             binary chop, is a search algorithm that finds the position of a target value within a sorted array.

@@ -1,7 +1,7 @@
 const dynamicTemplate = document.createElement('template');
 
 dynamicTemplate.innerHTML = `
-    <link rel="stylesheet" href="src/styles/algorithm.css" />
+    <link rel="stylesheet" href="assets/css/algorithm.css" />
     <style> 
         .item-input{
             margin-left: 5px;

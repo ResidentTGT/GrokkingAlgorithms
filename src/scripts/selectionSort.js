@@ -1,7 +1,7 @@
 const selectionSortTemplate = document.createElement('template');
 
 selectionSortTemplate.innerHTML = `
-    <link rel="stylesheet" href="src/styles/algorithm.css" />
+    <link rel="stylesheet" href="assets/css/algorithm.css" />
     <div class="description">
         In computer science, selection sort is an in-place comparison sorting algorithm. It has an O(n2)
         time complexity, which makes it inefficient on large lists, and generally performs worse than the

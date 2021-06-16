@@ -1,7 +1,7 @@
 const dijkstraTemplate = document.createElement('template');
 
 dijkstraTemplate.innerHTML = `
-    <link rel="stylesheet" href="src/styles/algorithm.css" />
+    <link rel="stylesheet" href="assets/css/algorithm.css" />
     <style> 
     .graph {
         display: none;

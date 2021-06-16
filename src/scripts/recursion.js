@@ -1,7 +1,7 @@
 const recursionTemplate = document.createElement('template');
 
 recursionTemplate.innerHTML = `
-    <link rel="stylesheet" href="src/styles/algorithm.css" />
+    <link rel="stylesheet" href="assets/css/algorithm.css" />
     <div class="description">
         Recursion occurs when a thing is defined in terms of itself or of its type. The most common
         application of recursion is in mathematics and computer science, where a function being defined is

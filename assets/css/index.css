@@ -18,6 +18,7 @@ aside {
     height: 100%;
     width: 300px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+    overflow-y: auto;
 }
 
 aside ul {

@@ -1,7 +1,7 @@
 const divideConquerTemplate = document.createElement('template');
 
 divideConquerTemplate.innerHTML = `
-        <link rel="stylesheet" href="src/styles/algorithm.css" />
+        <link rel="stylesheet" href="assets/css/algorithm.css" />
         
         <style>
         .item-input {
