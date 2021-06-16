@@ -21,13 +21,14 @@
             property="og:description"
             content="The project is dedicated to the book Grokking Algorithms by Aditya Y. Bhargava, describes and implements all algorithms from the book."
         />
-        <meta property="og:image" content="./assets/main.jpg" />
+        <meta property="og:image" content="./assets/neural.png" />
         <meta property="og:image:alt" content="Grokking Algorithms" />
         <meta property="og:locale" content="en_GB" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://grokking-algorithms.xyz/" />
         <link rel="canonical" href="https://grokking-algorithms.xyz/" />
-        <link rel="icon" href="./assets/main.jpg" />
+        <link rel="icon" href="assets/neural.png" />
+        <link rel="icon" href="assets/neural.svg" type="image/svg+xml">
         <meta name="theme-color" content="#212121" />
 
         <script type="text/javascript" src="src/scripts/navigation.js"></script>
@@ -43,55 +44,61 @@
     </head>
 
     <body>
-        <aside>
-            <a href="#binarySearch">Binary search algorithm</a>
-            <a href="#selectionSort">Selection sort</a>
-            <a href="#recursion">Recursion</a>
-            <a href="#divideConquer">Divide-and-conquer algorithm</a>
-            <a href="#quicksort">Quicksort</a>
-            <a href="#dijkstra">Dijkstra's algorithm</a>
-            <a href="#greedy">Greedy algorithm</a>
-            <a href="#dynamic">Dynamic programming</a>
-        </aside>
+        <header>
+            <object type="image/svg+xml" data="assets/neural.svg" class="logo"></object>
+            <div class="title">Grokking algorithms</div>
+        </header>
         <main>
-            <div class="algorithm-layout">
-                <a name="binarySearch">Binary search algorithm</a>
-                <binary-search-component></binary-search-component>
-            </div>
+            <aside>
+                <a href="#binarySearch">Binary search algorithm</a>
+                <a href="#selectionSort">Selection sort</a>
+                <a href="#recursion">Recursion</a>
+                <a href="#divideConquer">Divide-and-conquer algorithm</a>
+                <a href="#quicksort">Quicksort</a>
+                <a href="#dijkstra">Dijkstra's algorithm</a>
+                <a href="#greedy">Greedy algorithm</a>
+                <a href="#dynamic">Dynamic programming</a>
+            </aside>
+            <div class="algorithms">
+                <div class="algorithm-layout">
+                    <a name="binarySearch">Binary search algorithm</a>
+                    <binary-search-component></binary-search-component>
+                </div>
 
-            <div class="algorithm-layout">
-                <a name="selectionSort">Selection sort</a>
-                <selection-sort-component></selection-sort-component>
-            </div>
+                <div class="algorithm-layout">
+                    <a name="selectionSort">Selection sort</a>
+                    <selection-sort-component></selection-sort-component>
+                </div>
 
-            <div class="algorithm-layout">
-                <a name="recursion">Recursion</a>
-                <recursion-component></recursion-component>
-            </div>
+                <div class="algorithm-layout">
+                    <a name="recursion">Recursion</a>
+                    <recursion-component></recursion-component>
+                </div>
 
-            <div class="algorithm-layout">
-                <a name="divideConquer">Divide-and-conquer algorithm</a>
-                <divide-conquer-component></divide-conquer-component>
-            </div>
+                <div class="algorithm-layout">
+                    <a name="divideConquer">Divide-and-conquer algorithm</a>
+                    <divide-conquer-component></divide-conquer-component>
+                </div>
 
-            <div class="algorithm-layout">
-                <a name="quicksort">Quicksort</a>
-                <quicksort-component></quicksort-component>
-            </div>
+                <div class="algorithm-layout">
+                    <a name="quicksort">Quicksort</a>
+                    <quicksort-component></quicksort-component>
+                </div>
 
-            <div class="algorithm-layout">
-                <a name="dijkstra">Dijkstra's algorithm</a>
-                <dijkstra-component></dijkstra-component>
-            </div>
+                <div class="algorithm-layout">
+                    <a name="dijkstra">Dijkstra's algorithm</a>
+                    <dijkstra-component></dijkstra-component>
+                </div>
 
-            <div class="algorithm-layout">
-                <a name="greedy">Greedy algorithm</a>
-                <greedy-component></greedy-component>
-            </div>
+                <div class="algorithm-layout">
+                    <a name="greedy">Greedy algorithm</a>
+                    <greedy-component></greedy-component>
+                </div>
 
-            <div class="algorithm-layout">
-                <a name="dynamic">Dynamic programming</a>
-                <dynamic-component></dynamic-component>
+                <div class="algorithm-layout">
+                    <a name="dynamic">Dynamic programming</a>
+                    <dynamic-component></dynamic-component>
+                </div>
             </div>
         </main>
     </body>
