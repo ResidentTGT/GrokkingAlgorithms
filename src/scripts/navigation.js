@@ -3,11 +3,22 @@ window.addEventListener('DOMContentLoaded', () => {
     if (location.hash) {
         moveToActiveSection(getSections());
     }
+
+    addMenuEventListener();
 });
 
 window.addEventListener('popstate', () => {
     colorLinks(getLinks());
 });
+
+function addMenuEventListener() {
+    const menu = document.querySelector('button.menu');
+
+    menu.addEventListener('click', () => {
+        const aside = document.querySelector('aside');
+        aside.style.display = aside.style.display === 'block' ? 'none' : 'block';
+    });
+}
 
 function getLinks() {
     return Array.from(document.querySelectorAll('aside > a'));
@@ -31,6 +42,6 @@ function moveToActiveSection(sections) {
     const activeSection = sections.find(s => `#${s.name}` === location.hash);
 
     if (activeSection) {
-        setTimeout(() => document.body.querySelector('main').scrollTo({ top: activeSection.offsetTop }), 0);
+        setTimeout(() => document.body.querySelector('.algorithms').scrollTo({ top: activeSection.offsetTop }), 0);
     }
 }
