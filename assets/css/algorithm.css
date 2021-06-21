@@ -15,7 +15,8 @@
 }
 
 .description {
-    max-width: 800px;
+    max-width: 765px;
+    text-align: justify;
 }
 
 .complexity,

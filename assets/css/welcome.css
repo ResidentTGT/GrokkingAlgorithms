@@ -1,0 +1,35 @@
+.title {
+    display: flex;
+    padding: 20px 30px;
+}
+
+img {
+    height: 315px;
+}
+
+.description {
+    margin-left: 15px;
+    max-width: 500px;
+    text-align: justify;
+    font-size: 18px;
+}
+
+.description a {
+    color: #fbc02d;
+}
+
+.welcome {
+    font-size: 24px;
+    color: #fbc02d;
+}
+@media screen and (max-width: 768px) {
+    .title {
+        flex-direction: column;
+    }
+    .description {
+        margin: 15px 0 0 0;
+    }
+    img {
+        object-fit: scale-down;
+    }
+}
