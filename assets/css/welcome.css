@@ -4,7 +4,8 @@
 }
 
 img {
-    height: 315px;
+    height: 300px;
+    border-radius: 5px;
 }
 
 .description {
@@ -12,6 +13,7 @@ img {
     max-width: 500px;
     text-align: justify;
     font-size: 18px;
+    font-weight: 100;
 }
 
 .description a {
@@ -20,6 +22,7 @@ img {
 
 .welcome {
     font-size: 24px;
+    font-weight: 300;
     color: #fbc02d;
 }
 @media screen and (max-width: 768px) {

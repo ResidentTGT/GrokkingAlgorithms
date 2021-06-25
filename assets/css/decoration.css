@@ -1,0 +1,25 @@
+.decoration {
+    position: fixed;
+    z-index: 0;
+    top: 184px;
+    left: 10vw;
+    width: 100vw;
+    height: 1px;
+    background: #fbc02d;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    opacity: 0.3;
+}
+.decoration.second {
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.decoration.third {
+    transform: rotate(110deg);
+    -webkit-transform: rotate(110deg);
+    -ms-transform: rotate(110deg);
+    top: 0;
+    left: 26vw;
+}

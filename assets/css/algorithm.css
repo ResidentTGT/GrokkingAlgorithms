@@ -1,21 +1,6 @@
-.algorithm-layout {
-    padding: 0 30px 20px 30px;
-}
-
-.algorithm-layout:not(:first-child) a {
-    border-top: 1px solid #424242;
-}
-
-.algorithm-layout a {
-    display: block;
-    font-size: 22px;
-    height: 55px;
-    line-height: 55px;
-    color: #fbc02d;
-}
-
 .description {
     max-width: 765px;
+    font-weight: 100;
     text-align: justify;
 }
 

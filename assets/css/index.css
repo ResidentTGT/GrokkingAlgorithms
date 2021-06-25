@@ -17,9 +17,13 @@ body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: white;
+
+    overflow: hidden;
 }
 
 header {
+    position: relative;
+    z-index: 1000;
     width: 100%;
     height: var(--header-height);
     background: var(--main-theme);
@@ -73,6 +77,8 @@ main {
 }
 
 aside {
+    position: relative;
+    z-index: 900;
     height: 100%;
     width: var(--aside-width);
     box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
@@ -116,6 +122,43 @@ aside a.active {
     flex: 1;
     overflow: auto;
     scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: #fbc02d;
+    border: 1px solid #fbc02d;
+    border-radius: 5px;
+}
+
+.algorithm-layout {
+    border-top: 1px solid #424242;
+    padding: 0 30px 20px 30px;
+    box-sizing: border-box;
+}
+
+.algorithm-layout > a {
+    display: inline-block;
+    font-size: 22px;
+    height: 55px;
+    line-height: 55px;
+    color: #fbc02d;
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+.algorithm-layout > a object {
+    pointer-events: none;
+    margin-left: 10px;
+    width: 17px;
+    height: 17px;
 }
 
 @media screen and (max-width: 768px) {
