@@ -119,8 +119,11 @@ aside a.active {
 }
 
 .algorithms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     flex: 1;
-    overflow: auto;
+    overflow-y: auto;
     scroll-behavior: smooth;
 }
 
@@ -140,8 +143,8 @@ aside a.active {
 
 .algorithm-layout {
     border-top: 1px solid #424242;
-    padding: 0 30px 20px 30px;
-    box-sizing: border-box;
+    margin: 0 30px 20px 30px;
+    width: 800px;
 }
 
 .algorithm-layout > a {
@@ -171,5 +174,8 @@ aside a.active {
         position: fixed;
         top: var(--header-height);
         left: 0;
+    }
+    .algorithm-layout {
+        width: calc(100% - 60px);
     }
 }
