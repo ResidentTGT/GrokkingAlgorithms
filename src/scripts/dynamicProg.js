@@ -13,8 +13,8 @@ dynamicTemplate.innerHTML = `
         }
     </style>
     <div class="description">
-    Dynamic programming is the method which was developed by Richard Bellman in the 1950s and has found applications in numerous fields, from aerospace engineering to economics.<br>
-    In both contexts it refers to simplifying a complicated problem by breaking it down into simpler sub-problems in a recursive manner. While some decision problems cannot be taken apart this way, decisions that span several points in time do often break apart recursively.
+    Dynamic programming refers to simplifying a complicated problem by breaking it down into simpler sub-problems in a recursive manner. 
+    While some decision problems cannot be taken apart this way, decisions that span several points in time do often break apart recursively.
     Likewise, in computer science, if a problem can be solved optimally by breaking it into sub-problems and then recursively finding the optimal solutions to the sub-problems, then it is said to have optimal substructure.<br>
     If sub-problems can be nested recursively inside larger problems, so that dynamic programming methods are applicable, then there is a relation between the value of the larger problem and the values of the sub-problems.
     </div>
