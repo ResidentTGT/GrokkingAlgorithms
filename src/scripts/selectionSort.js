@@ -17,8 +17,9 @@ selectionSortTemplate.innerHTML = `
     </div>
     <div class="complexity">Complexity: O(n<sup>2</sup>)</div>
     <div class="example-title">Example</div>
+    <div class="condition">We want to sort the array generated below and count the number of steps.</div>
     <button class="action-button generate">Generate unsorted array!</button>
-    <div class="condition">Unsorted array: []</div>
+    <div class="condition array">Unsorted array: []</div>
     <button class="action-button sort" disabled>Sort!</button>
     <div class="result"></div>
     `;
@@ -36,12 +37,12 @@ class SelectionSortComponent extends HTMLElement {
         this.$generateButton = this.shadowRoot.querySelector('.action-button.generate');
         this.$sortButton = this.shadowRoot.querySelector('.action-button.sort');
         this.$result = this.shadowRoot.querySelector('.result');
-        this.$condition = this.shadowRoot.querySelector('.condition');
+        this.$condition = this.shadowRoot.querySelector('.condition.array');
     }
 
     connectedCallback() {
         this.$generateButton.addEventListener('click', () => this.generateArray());
-        this.$sortButton.addEventListener('click', () => this.sort());
+        this.$sortButton.addEventListener('click', () => this.selectionSort());
     }
 
     disconnectedCallback() {
@@ -49,7 +50,7 @@ class SelectionSortComponent extends HTMLElement {
         this.$sortButton.removeEventListener();
     }
 
-    sort() {
+    selectionSort() {
         const sortedArray = [];
         let totalSteps = 0;
 

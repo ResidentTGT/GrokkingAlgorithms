@@ -59,14 +59,14 @@ class DivideConquerComponent extends HTMLElement {
     }
 
     connectedCallback() {
-        this.$divideConquerButton.addEventListener('click', () => this.divideConquer());
+        this.$divideConquerButton.addEventListener('click', () => this.divideConquerButtonClickHandler());
     }
 
     disconnectedCallback() {
         this.$divideConquerButton.removeEventListener();
     }
 
-    divideConquer() {
+    divideConquerButtonClickHandler() {
         if (this.$inputs.length !== 2 || Array.from(this.$inputs).some(i => !this.isValidInput(i.value))) {
             this.showError();
             this.showResult();
@@ -77,12 +77,12 @@ class DivideConquerComponent extends HTMLElement {
 
         const [width, height] = [+this.$inputs[0].value, +this.$inputs[1].value];
 
-        const maxSquareSize = this.getMaxSizeRecursion(width, height);
+        const maxSquareSize = this.getMaxSquareSizeRecursion(width, height);
 
         this.showResult(maxSquareSize, width, height);
     }
 
-    getMaxSizeRecursion(width, height) {
+    getMaxSquareSizeRecursion(width, height) {
         const [min, max] = width > height ? [height, width] : [width, height];
 
         const rest = max % min;
@@ -90,7 +90,7 @@ class DivideConquerComponent extends HTMLElement {
         if (rest === 0) {
             return min;
         } else {
-            return this.getMaxSizeRecursion(rest, min);
+            return this.getMaxSquareSizeRecursion(rest, min);
         }
     }
 

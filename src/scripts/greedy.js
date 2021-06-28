@@ -33,7 +33,7 @@ class GreedyComponent extends HTMLElement {
 
     connectedCallback() {
         this.$generateButton.addEventListener('click', () => this.generateStationsClickHandler());
-        this.$findButton.addEventListener('click', () => this.dijkstraClickHandler());
+        this.$findButton.addEventListener('click', () => this.greedyClickHandler());
     }
 
     disconnectedCallback() {
@@ -70,7 +70,7 @@ class GreedyComponent extends HTMLElement {
         this.$findButton.removeAttribute('disabled');
     }
 
-    dijkstraClickHandler() {
+    greedyClickHandler() {
         const finalStations = new Set();
         let statesNeeded = new Set([...this._states]);
 

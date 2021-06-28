@@ -9,6 +9,7 @@
 .result {
     font-weight: 400;
     margin-top: 15px;
+    text-align: justify;
 }
 .result {
     line-height: 25px;
@@ -16,7 +17,7 @@
 .example-title {
     margin-top: 15px;
     font-size: 20px;
-    color: #fbc02d;
+    color: var(--accent-color);
 }
 
 .item-input,
@@ -35,27 +36,34 @@
 .error {
     transition: 200ms;
     opacity: 0;
+    display: none;
     color: #f44336;
-    margin-left: 20px;
 }
 
 .show {
+    display: block;
     opacity: 1;
 }
 
 .action-button {
     display: block;
     cursor: pointer;
-    color: #212121;
-    background: #fbc02d;
+    color: var(--main-color);
+    background: var(--accent-color);
     transition: 300ms;
 }
 
 .action-button:hover:not(:disabled) {
-    background: #424242;
-    color: #fbc02d;
+    background: var(--background-color);
+    color: var(--accent-color);
 }
 
 .action-button:disabled {
     background: #616161;
+}
+
+@media screen and (max-width: 768px) {
+    .action-button {
+        width: 100%;
+    }
 }

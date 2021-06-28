@@ -5,7 +5,7 @@
     left: 10vw;
     width: 100vw;
     height: 1px;
-    background: #fbc02d;
+    background: var(--accent-color);
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);

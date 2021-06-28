@@ -13,7 +13,7 @@ binarySearchTemplate.innerHTML = `
         </div>
         <div class="complexity">Complexity: O(log(n))</div>
         <div class="example-title">Example</div>
-        <div class="condition">Sorted array: [0...999]</div>
+        <div class="condition">We have sorted array from 0 to 999 and want to guess the number entered below and count the number of steps.</div>
         <input class="item-input" type="number" placeholder="Enter number from 0 to 999" />
         <span class="error">Invalid value! Enter integer number from 0 to 999!</span>
         <button class="action-button">Find!</button>
@@ -68,7 +68,7 @@ class BinarySearchComponent extends HTMLElement {
         let endIndex = array.length - 1;
 
         let steps = 1;
-
+        
         let isFound = false;
 
         while (!isFound) {

@@ -3,8 +3,12 @@ const dynamicTemplate = document.createElement('template');
 dynamicTemplate.innerHTML = `
     <link rel="stylesheet" href="assets/css/algorithm.css" />
     <style> 
+        .enter{
+            margin: 15px 5px 0 0;
+            display:inline-block;
+        }
         .item-input{
-            margin-left: 5px;
+            margin-right: 5px;
             width: 200px;
         }
     </style>
@@ -16,7 +20,7 @@ dynamicTemplate.innerHTML = `
     </div>
     <div class="example-title">Example</div>
     <div class="condition">We will search for the longest common subsequence in 2 words.</div>
-    <span>Enter 2 similar words: </span>
+    <div class="enter">Enter 2 similar words: </div>
     <input class="item-input" type="text"  />
     <input class="item-input" type="text"  />
     <span class="error">Enter not empty strings!</span>

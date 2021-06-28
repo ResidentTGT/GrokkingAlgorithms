@@ -9,7 +9,7 @@ recursionTemplate.innerHTML = `
         (function values), it is often done in such a way that no infinite loop or infinite chain of
         references can occur.<br />
         In mathematics and computer science, a class of objects or methods exhibits recursive behavior when
-        it can be defined by two properties:<br />&#8226; A simple base case (or cases) — a terminating
+        it can be defined by two parts:<br />&#8226; A simple base case (or cases) — a terminating
         scenario that does not use recursion to produce an answer<br />&#8226; A recursive step — a set of
         rules that reduces all successive cases toward the base case.
     </div>
