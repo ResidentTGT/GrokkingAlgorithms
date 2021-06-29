@@ -181,7 +181,7 @@ aside a.active {
     .algorithm-layout {
         width: calc(100% - 60px);
     }
-    .decoration{
+    .decoration {
         display: none;
     }
 }

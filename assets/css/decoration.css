@@ -1,25 +1,30 @@
 .decoration {
+    --first-angle: rotate(35deg);
+    --second-angle: rotate(-45deg);
+    --third-angle: rotate(110deg);
+
     position: fixed;
     z-index: 0;
-    top: 184px;
-    left: 10vw;
-    width: 100vw;
+    width: max(100% , 100vh);
     height: 1px;
     background: var(--accent-color);
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    opacity: 0.3;
+    opacity: 0.2;
+
+    top: 50%;
+    left: 0;
+    transform: var(--first-angle);
+    -webkit-transform: var(--first-angle);
+    -ms-transform: var(--first-angle);
 }
 .decoration.second {
-    -webkit-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+    left: 10%;
+    transform: var(--second-angle);
+    -webkit-transform: var(--second-angle);
+    -ms-transform: var(--second-angle);
 }
 .decoration.third {
-    transform: rotate(110deg);
-    -webkit-transform: rotate(110deg);
-    -ms-transform: rotate(110deg);
-    top: 0;
-    left: 26vw;
+    left: 30%;
+    transform: var(--third-angle);
+    -webkit-transform: var(--third-angle);
+    -ms-transform: var(--third-angle);
 }
