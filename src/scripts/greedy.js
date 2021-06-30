@@ -12,7 +12,7 @@ greedyTemplate.innerHTML = `
     <div class="condition">We want to find the minimum set of stations that covers all states: mt, wa, or, id, nv, ut.</div>
     <button class="action-button generate">Generate stations!</button>
     <div class="condition stations"></div>
-    <button class="action-button find" disabled>Find the !</button>
+    <button class="action-button find" disabled>Find the set of stations!</button>
     <div class="result"></div>
     `;
 

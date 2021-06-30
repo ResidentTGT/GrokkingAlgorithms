@@ -10,7 +10,7 @@ quicksortTemplate.innerHTML = `
     </div>
     <div class="complexity">Complexity: O(n * log(n))</div>
     <div class="example-title">Example</div>
-    <div class="condition">We want to sort the array generated below and count the number of steps.</div>
+    <div class="condition">We want to sort the array generated below and count the number of the algorithm steps(iterations).</div>
     <button class="action-button generate">Generate unsorted array!</button>
     <div class="condition array">Unsorted array: []</div>
     <button class="action-button sort" disabled>Sort!</button>
