@@ -1,9 +1,10 @@
 window.addEventListener('DOMContentLoaded', () => {
-    colorLinks(getLinks());
     if (location.hash) {
         moveToActiveSection(getSections());
+        colorLinks(getLinks());
     }
 
+    addAlgorithmsScrollEventListener();
     addMenuEventListener();
 });
 
@@ -44,4 +45,19 @@ function moveToActiveSection(sections) {
     if (activeSection) {
         setTimeout(() => document.body.querySelector('.algorithms').scrollTo({ top: activeSection.offsetTop }), 0);
     }
+}
+
+function addAlgorithmsScrollEventListener() {
+    document.body.querySelector('.algorithms').addEventListener('scroll', e => {
+        setTimeout(() => {
+            const sections = getSections();
+            const activeSection = sections
+                .filter(s => e.target.scrollTop + e.target.offsetTop + 1 > s.offsetTop)
+                .reverse()[0];
+            if (activeSection && e.target.scrollTop + e.target.offsetHeight + 1 < e.target.scrollHeight) {
+                history.replaceState(null, null, document.location.pathname + '#' + activeSection.name);
+                colorLinks(getLinks());
+            }
+        }, 1000);
+    });
 }

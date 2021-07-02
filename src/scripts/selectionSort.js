@@ -82,8 +82,8 @@ class SelectionSortComponent extends HTMLElement {
     showResult(sortedArray, totalSteps) {
         this.$result.innerHTML = `Sorted array (${sortedArray.length} items): [${sortedArray.join(', ')}].
             <br>This algorithm took ${totalSteps} steps to find the result.
-            <br>The real complexity is O(1/2 * n<sup>2</sup> - ${this._arrayLength}/2) 
-            due to the sequence of the number of items checked: n, n-1, n-2...2, 1. But constants in Big O notation are ignored.`;
+            <br>Due to the sequence of the number of items checked (n, n-1, n-2...2, 1) the real complexity is 1/2 * n<sup>2</sup> - ${this._arrayLength}/2. 
+            But constants in Big O notation are ignored.`;
 
         this.$sortButton.setAttribute('disabled', true);
     }
