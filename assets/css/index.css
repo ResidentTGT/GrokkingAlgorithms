@@ -94,9 +94,10 @@ aside ul {
     overflow-y: auto;
     margin: 0;
     padding: 0;
+    list-style-type: none;
 }
 
-aside a {
+aside ul li {
     display: block;
     height: 45px;
     width: 100%;
@@ -111,11 +112,12 @@ aside a {
     transition: 500ms;
 }
 
-aside a:hover {
+aside ul li:hover {
     background: #616161;
+    cursor: pointer;
 }
 
-aside a.active {
+aside ul li.active {
     background: var(--accent-color);
     color: black;
 }
@@ -149,22 +151,22 @@ aside a.active {
     width: 800px;
 }
 
-.algorithm-layout > a {
-    display: inline-block;
+.algorithm-layout > div {
+    display: flex;
     font-size: 22px;
     height: 55px;
-    line-height: 55px;
+    align-items: center;
     color: var(--accent-color);
-    text-decoration: none;
-    outline: none;
 }
 
-.algorithm-layout > a object {
-    pointer-events: none;
-    margin-left: 8px;
+.algorithm-layout > div > a {
+    margin-left: 10px;
     width: 18px;
-    height: 18px;
-    vertical-align: middle;
+    height: 22px;
+}
+
+.algorithm-layout > div > a object {
+    pointer-events: none;
 }
 
 @media screen and (max-width: 768px) {
