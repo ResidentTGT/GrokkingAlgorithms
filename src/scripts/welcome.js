@@ -24,7 +24,6 @@ welcomeTemplate.innerHTML = `
     }
     
     img {
-        z-index: 100;
         height: 275px;
         border-radius: 5px;
     }
