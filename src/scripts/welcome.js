@@ -1,7 +1,7 @@
 const welcomeTemplate = document.createElement('template');
 
 welcomeTemplate.innerHTML = `
-    <link rel="stylesheet" href="assets/css/welcome.css" />
+    
     <div class="title">
         <img src="assets/book.jpg" />
         <div class="description">
@@ -15,6 +15,50 @@ welcomeTemplate.innerHTML = `
             <span class="welcome">Good luck grokking algorithms!</span>
         </div>
     </div>
+
+    <style>
+    .title {
+        display: flex;
+        margin: 30px;
+        width: 800px;
+    }
+    
+    img {
+        z-index: 100;
+        height: 275px;
+        border-radius: 5px;
+    }
+    
+    .description {
+        margin-left: 15px;
+        text-align: justify;
+        font-size: 18px;
+        font-weight: 100;
+    }
+    
+    .description a {
+        color: var(--accent-color);
+    }
+    
+    .welcome {
+        font-size: 24px;
+        font-weight: 300;
+        color: var(--accent-color);
+    }
+    @media screen and (max-width: 768px) {
+        .title {
+            flex-direction: column;
+            width: calc(100% - 60px);
+        }
+        .description {
+            margin: 20px 0 0 0;
+        }
+        img {
+            object-fit: scale-down;
+        }
+    }
+    
+    </style>
     `;
 
 class WelcomeComponent extends HTMLElement {

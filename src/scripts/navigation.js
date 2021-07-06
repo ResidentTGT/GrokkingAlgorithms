@@ -1,12 +1,15 @@
 window.addEventListener('DOMContentLoaded', () => {
+    const mainBlock = document.querySelector('.algorithms');
+    const sections = Array.from(document.querySelectorAll('.algorithm-layout'));
+    const links = getLinks();
+
     if (location.hash) {
-        moveToActiveSection(getSections());
-        colorLinks(getLinks());
+        moveToActiveSection(sections, mainBlock);
+        colorLinks(links);
     }
 
-    addLiClickListener(getLinks(), getSections());
-
-    addAlgorithmsScrollEventListener(getSections());
+    addLiClickListener(links, sections, mainBlock);
+    addAlgorithmsScrollEventListener(sections, mainBlock);
     addMenuEventListener();
 });
 
@@ -14,16 +17,35 @@ window.addEventListener('popstate', () => {
     colorLinks(getLinks());
 });
 
-function addLiClickListener(links, sections) {
-    const mainBlock = document.body.querySelector('.algorithms');
+function moveToActiveSection(sections, mainBlock) {
+    const activeSection = findActiveBlock(sections, location.hash.slice(1));
 
+    if (activeSection) {
+        setTimeout(() => scrollTo(activeSection, mainBlock), 500);
+    }
+}
+
+function addLiClickListener(links, sections, mainBlock) {
     links.forEach(li => {
         li.addEventListener('click', e => {
             const name = e.target.attributes.getNamedItem('name').value;
             location.hash = name;
-            const activeSection = sections.find(s => `${s.attributes.getNamedItem('name').value}` === name);
-            mainBlock.scrollTo({ top: activeSection.offsetTop - mainBlock.offsetTop });
+
+            const activeSection = findActiveBlock(sections, name);
+            scrollTo(activeSection, mainBlock);
         });
+    });
+}
+
+function addAlgorithmsScrollEventListener(sections, mainBlock) {
+    let timer;
+    mainBlock.addEventListener('scroll', e => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            const activeSection = sections.filter(s => e.target.scrollTop + window.innerHeight / 2 > s.offsetTop).pop();
+
+            location.hash = activeSection ? activeSection.attributes.getNamedItem('name').value : '';
+        }, 100);
     });
 }
 
@@ -40,8 +62,12 @@ function getLinks() {
     return Array.from(document.querySelectorAll('aside ul li'));
 }
 
-function getSections() {
-    return Array.from(document.querySelectorAll('.algorithm-layout'));
+function findActiveBlock(sections, name) {
+    return sections.find(s => `${s.attributes.getNamedItem('name').value}` === name);
+}
+
+function scrollTo(activeSection, mainBlock) {
+    mainBlock.scrollTo({ top: activeSection.offsetTop - mainBlock.offsetTop });
 }
 
 function colorLinks(links) {
@@ -50,26 +76,6 @@ function colorLinks(links) {
             l.classList.add('active');
         } else {
             l.classList.remove('active');
-        }
-    });
-}
-
-function moveToActiveSection(sections) {
-    const activeSection = sections.find(s => `#${s.attributes.getNamedItem('name').value}` === location.hash);
-    const mainBlock = document.body.querySelector('.algorithms');
-
-    if (activeSection) {
-        setTimeout(() => mainBlock.scrollTo({ top: activeSection.offsetTop - mainBlock.offsetTop }), 0);
-    }
-}
-
-function addAlgorithmsScrollEventListener(sections) {
-    document.body.querySelector('.algorithms').addEventListener('scroll', e => {
-        const activeSection = sections
-            .filter(s => e.target.scrollTop + e.target.offsetTop + 1 > s.offsetTop)
-            .reverse()[0];
-        if (activeSection && e.target.scrollTop + e.target.offsetHeight + 1 < e.target.scrollHeight) {
-            location.hash = activeSection.attributes.getNamedItem('name').value;
         }
     });
 }
