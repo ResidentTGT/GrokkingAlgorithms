@@ -1,4 +1,4 @@
-# Grokking Algorithms
+# [Grokking Algorithms](https://grokking-algorithms.xyz/)
 This project is dedicated to the book [Grokking Algorithms by Aditya Y. Bhargava](https://www.amazon.com/Grokking-Algorithms-illustrated-programmers-curious/dp/1617292230). Each presented example in the book includes code samples in Python. In this project all algorithms were implemented in pure JavaScript.
 Each section includes short description of algorithm, dynamic example (you dynamically generate input parameters), result of the algorithm and link to implementation in GitHub.
 ## Installation
